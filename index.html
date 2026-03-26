@@ -108,3 +108,47 @@ function openLink(type) {
 
 </body>
 </html>
+<script>
+
+// 🔹 Farmer Data Loader
+async function loadFarmerData(type) {
+
+  let content = document.getElementById("dynamicContent");
+  content.innerHTML = "Loading...";
+
+  if(type === "schemes"){
+    content.innerHTML = `
+      <h3>Government Schemes</h3>
+      <ul>
+        <li><a href="https://pmkisan.gov.in/" target="_blank">PM Kisan Yojana</a></li>
+        <li><a href="https://enam.gov.in/" target="_blank">e-NAM Portal</a></li>
+      </ul>
+    `;
+  }
+
+  else if(type === "msp"){
+    content.innerHTML = `
+      <h3>MSP Rates</h3>
+      <p>Wheat: ₹2275/quintal</p>
+      <p>Rice: ₹2183/quintal</p>
+    `;
+  }
+
+  else if(type === "weather"){
+    try {
+      let res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=28.6&longitude=77.2&current_weather=true");
+      let data = await res.json();
+
+      content.innerHTML = `
+        <h3>Weather Update</h3>
+        <p>Temperature: ${data.current_weather.temperature}°C</p>
+        <p>Wind Speed: ${data.current_weather.windspeed} km/h</p>
+      `;
+    } catch (err) {
+      content.innerHTML = "Weather API error";
+    }
+  }
+
+}
+
+</script>
