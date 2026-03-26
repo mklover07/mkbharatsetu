@@ -180,11 +180,14 @@ footer {
 <!-- COMPLAINT -->
 <div class="section">
   <h2>📢 Complaint</h2>
-  <div class="cards">
 
-    <div class="card" onclick="openLink('/admin.html')">
-      Register Complaint
-    </div>
+  <input id="name" placeholder="Name"><br><br>
+  <input id="phone" placeholder="Phone"><br><br>
+  <textarea id="complaint" placeholder="Write complaint"></textarea><br><br>
+
+  <button onclick="submitComplaint()">Submit</button>
+
+</div>
 
     <div class="card" onclick="openLink('/login.html')">
       Admin Login
