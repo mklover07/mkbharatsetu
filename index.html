@@ -156,3 +156,29 @@ async function loadFarmerData(type) {
 onclick="loadFarmerData('schemes')"
 onclick="loadFarmerData('msp')"
 onclick="loadFarmerData('weather')"
+<script>
+
+async function loadLiveFeed(){
+  let feed = document.getElementById("newsFeed");
+
+  const news = [
+    "🚜 MSP Updated",
+    "📚 Govt Jobs Released",
+    "📈 Market Trending",
+    "🌦 Weather Alert"
+  ];
+
+  let i = 0;
+
+  setInterval(()=>{
+    feed.innerText = news[i];
+    i = (i + 1) % news.length;
+  }, 2000);
+}
+
+loadLiveFeed();
+
+</script>
+<div class="news-bar">
+  <span id="newsFeed">Loading...</span>
+</div>
