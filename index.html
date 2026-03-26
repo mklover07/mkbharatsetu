@@ -97,7 +97,7 @@ nav a {
 
 <h1>One Platform for Every Indian</h1>
 
-<h2>Farmer Section</h2>
+<h2>Farmer Section</h2><div id="farmerData" style="margin-top:20px;"></div>
 
 <div class="card" onclick="loadFarmerData('schemes')">Government Schemes</div>
 
@@ -222,4 +222,6 @@ async function loadFarmerData(type) {
     container.innerHTML = "Error loading data";
   }
 }
-</script>
+</script><button onclick="loadFarmerData('schemes')">Government Schemes</button>
+<button onclick="loadFarmerData('msp')">MSP Rates</button>
+<button onclick="loadFarmerData('weather')">Weather Updates</button>
