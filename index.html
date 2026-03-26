@@ -3,26 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>MK Bharat Setu</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 
 /* GLOBAL */
+html{scroll-behavior:smooth;}
+
 body{
   margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  font-family:'Poppins',sans-serif;
+  background: radial-gradient(circle at top,#1e3c72,#2a5298,#0f2027);
   color:white;
 }
 
 /* HEADER */
 .header{
+  position:sticky;
+  top:0;
+  z-index:1000;
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:15px 30px;
-  backdrop-filter:blur(10px);
-  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,0.08);
 }
 
 .logo{
@@ -45,13 +53,20 @@ nav{
 }
 
 nav a{
+  padding:8px 15px;
+  border-radius:20px;
   cursor:pointer;
-  font-weight:bold;
+  transition:0.3s;
+}
+
+nav a:hover{
+  background:#00c6ff;
+  color:black;
 }
 
 /* NEWS */
 #newsBar{
-  background:rgba(0,0,0,0.7);
+  background:linear-gradient(to right,#000,#111,#000);
   padding:10px;
   overflow:hidden;
 }
@@ -60,6 +75,7 @@ nav a{
   display:inline-block;
   white-space:nowrap;
   animation:scroll 20s linear infinite;
+  color:#00ffcc;
 }
 
 @keyframes scroll{
@@ -70,15 +86,34 @@ nav a{
 /* HERO */
 .hero{
   text-align:center;
-  padding:40px;
+  padding:60px 20px;
 }
 
-/* SECTIONS */
+.hero h1{
+  font-size:42px;
+  text-shadow:0 0 25px rgba(0,198,255,0.7);
+}
+
+.hero p{
+  font-size:18px;
+  opacity:0.8;
+}
+
+/* SECTION */
 .section{
   text-align:center;
-  padding:20px;
+  padding:30px;
+  opacity:0;
+  transform:translateY(40px);
+  transition:0.6s;
 }
 
+.section.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* CARDS */
 .cards{
   display:flex;
   justify-content:center;
@@ -87,35 +122,36 @@ nav a{
 }
 
 .card{
-  background:rgba(255,255,255,0.1);
+  background:linear-gradient(145deg,#1e3c72,#2a5298);
   padding:15px 25px;
-  border-radius:15px;
+  border-radius:20px;
   cursor:pointer;
-  backdrop-filter:blur(10px);
-  transition:0.3s;
+  transition:0.4s;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
 .card:hover{
-  transform:translateY(-5px) scale(1.05);
-  background:rgba(255,255,255,0.2);
+  transform:translateY(-8px) scale(1.08);
+  box-shadow:0 15px 40px rgba(0,198,255,0.5);
 }
 
-/* OUTPUT */
-.output{
-  margin-top:20px;
+.card:active{
+  transform:scale(0.95);
 }
 
 /* FORM */
 input,textarea{
   padding:10px;
   width:250px;
+  border-radius:10px;
+  border:none;
 }
 
 button{
   padding:10px 20px;
   background:#00c6ff;
   border:none;
-  color:white;
+  border-radius:20px;
   cursor:pointer;
 }
 
@@ -124,7 +160,6 @@ button{
   text-align:center;
   padding:30px;
   background:rgba(0,0,0,0.4);
-  margin-top:40px;
 }
 
 </style>
@@ -135,101 +170,76 @@ button{
 
 <!-- HEADER -->
 <div class="header">
-
   <div class="logo">
     <img src="https://i.ibb.co/8Xb3b2k/india.png" width="35">
     <div>
-      MK Bharat Setu
-      <br>
-      <small style="opacity:0.6;">Powered by MK Global Nexus</small>
+      MK Bharat Setu<br>
+      <small style="opacity:0.6;">MK Global Nexus</small>
     </div>
   </div>
 
   <div class="profile">
     <img src="https://i.ibb.co/ZYW3VTp/profile.png" width="40">
   </div>
-
 </div>
 
 <!-- NAV -->
 <nav>
-  <a onclick="scrollToSection('farmer')">Farmer</a>
-  <a onclick="scrollToSection('student')">Student</a>
-  <a onclick="scrollToSection('business')">Business</a>
-  <a onclick="scrollToSection('about')">About</a>
-  <a onclick="scrollToSection('complaint')">Complaint</a>
+  <a onclick="go('farmer')">Farmer</a>
+  <a onclick="go('student')">Student</a>
+  <a onclick="go('business')">Business</a>
+  <a onclick="go('about')">About</a>
+  <a onclick="go('complaint')">Complaint</a>
 </nav>
 
 <!-- NEWS -->
 <div id="newsBar">
-  <div id="newsText">Loading News...</div>
+  <div id="newsText">Loading news...</div>
 </div>
 
 <!-- HERO -->
 <div class="hero">
   <h1>MK Bharat Setu 🇮🇳</h1>
-  <p>
-    A National Digital Platform by 
-    <strong style="color:#00c6ff;">MK Global Nexus</strong>
-  </p>
-  <p style="opacity:0.7;">
-    Empowering Farmers • Students • Businesses
-  </p>
-
-  <div id="weather">Loading Weather...</div>
+  <p>Powered by MK Global Nexus</p>
+  <p>Farmers • Students • Business • Public Support</p>
+  <div id="weather">Loading weather...</div>
 </div>
 
 <!-- FARMER -->
 <div id="farmer" class="section">
   <h2>🌾 Farmer</h2>
-
   <div class="cards">
-    <div class="card" onclick="loadSection('farmer','schemes')">Schemes</div>
-    <div class="card" onclick="loadSection('farmer','msp')">MSP</div>
+    <div class="card" onclick="load('pmkisan.gov.in')">Schemes</div>
+    <div class="card" onclick="load('agmarknet.gov.in')">MSP</div>
     <div class="card" onclick="loadWeather()">Weather</div>
   </div>
-
-  <div id="farmerData" class="output"></div>
 </div>
 
 <!-- STUDENT -->
 <div id="student" class="section">
   <h2>🎓 Student</h2>
-
   <div class="cards">
-    <div class="card" onclick="loadSection('student','jobs')">Jobs</div>
-    <div class="card" onclick="loadSection('student','notes')">Notes</div>
-    <div class="card" onclick="loadSection('student','scholarship')">Scholarship</div>
+    <div class="card" onclick="load('freejobalert.com')">Jobs</div>
+    <div class="card" onclick="load('ncert.nic.in')">Notes</div>
+    <div class="card" onclick="load('scholarships.gov.in')">Scholarship</div>
   </div>
-
-  <div id="studentData" class="output"></div>
 </div>
 
 <!-- BUSINESS -->
 <div id="business" class="section">
   <h2>💼 Business</h2>
-
   <div class="cards">
-    <div class="card" onclick="loadSection('business','market')">Market</div>
-    <div class="card" onclick="loadSection('business','startup')">Startup</div>
-    <div class="card" onclick="loadSection('business','tools')">Tools</div>
+    <div class="card" onclick="load('economictimes.indiatimes.com')">Market</div>
+    <div class="card" onclick="load('startupindia.gov.in')">Startup</div>
+    <div class="card" onclick="load('indiafilings.com')">Tools</div>
   </div>
-
-  <div id="businessData" class="output"></div>
 </div>
 
 <!-- ABOUT -->
 <div id="about" class="section">
   <h2>🏢 About</h2>
-
-  <p style="max-width:600px;margin:auto;opacity:0.8;">
-    MK Global Nexus is a digital platform focused on cyber security, 
-    public awareness, and national development initiatives.
-  </p>
-
-  <p style="margin-top:10px;">
-    <strong>Founder:</strong> Manoj Meena
-  </p>
+  <p>MK Global Nexus is a digital platform focused on cyber security and public awareness.</p>
+  <p><strong>Founder: Manoj Meena</strong></p>
 </div>
 
 <!-- COMPLAINT -->
@@ -238,100 +248,58 @@ button{
 
   <input id="name" placeholder="Name"><br><br>
   <input id="phone" placeholder="Phone"><br><br>
-  <textarea id="complaintText" placeholder="Complaint"></textarea><br><br>
+  <textarea id="complaintText"></textarea><br><br>
 
-  <button onclick="submitComplaint()">Submit</button>
+  <button onclick="submit()">Submit</button>
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
-  <h3>MK Global Nexus</h3>
-  <p style="opacity:0.7;">
-    Cyber Security • Digital Solutions • Media Network
-  </p>
-  <p style="font-size:12px;opacity:0.5;">
-    © 2026 MK Global Nexus
-  </p>
+  MK Global Nexus © 2026
 </div>
 
 <script>
 
 /* SCROLL */
-function scrollToSection(id){
+function go(id){
   document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
 
-/* CONTENT */
-function loadSection(section,type){
-  let content="";
-
-  if(section==="farmer"){
-    if(type==="schemes"){
-      content=`<a href="https://pmkisan.gov.in" target="_blank">PM Kisan Scheme</a>`;
-    }
-    if(type==="msp"){
-      content=`<a href="https://agmarknet.gov.in" target="_blank">Check MSP</a>`;
-    }
-    document.getElementById("farmerData").innerHTML=content;
-  }
-
-  if(section==="student"){
-    if(type==="jobs"){
-      content=`<a href="https://www.freejobalert.com" target="_blank">Latest Jobs</a>`;
-    }
-    if(type==="notes"){
-      content=`<a href="https://ncert.nic.in" target="_blank">Study Notes</a>`;
-    }
-    if(type==="scholarship"){
-      content=`<a href="https://scholarships.gov.in" target="_blank">Apply Here</a>`;
-    }
-    document.getElementById("studentData").innerHTML=content;
-  }
-
-  if(section==="business"){
-    if(type==="market"){
-      content=`<a href="https://economictimes.indiatimes.com" target="_blank">Market News</a>`;
-    }
-    if(type==="startup"){
-      content=`<a href="https://startupindia.gov.in" target="_blank">Startup India</a>`;
-    }
-    if(type==="tools"){
-      content=`<a href="https://www.indiafilings.com" target="_blank">Business Tools</a>`;
-    }
-    document.getElementById("businessData").innerHTML=content;
-  }
+/* OPEN LINK */
+function load(url){
+  window.open("https://"+url,"_blank");
 }
 
 /* WEATHER */
 async function loadWeather(){
   const res=await fetch("https://api.open-meteo.com/v1/forecast?latitude=26.9&longitude=75.8&current_weather=true");
-  const data=await res.json();
-  document.getElementById("weather").innerHTML=
-    "🌤 Temp: "+data.current_weather.temperature+"°C";
+  const d=await res.json();
+  document.getElementById("weather").innerHTML="🌤 "+d.current_weather.temperature+"°C";
 }
 
 /* NEWS */
 async function loadNews(){
   const res=await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en");
   const data=await res.json();
-  let text=data.items.map(n=>n.title).join(" 🔴 ");
-  document.getElementById("newsText").innerText=text;
+  document.getElementById("newsText").innerText=
+    data.items.map(x=>x.title).join(" 🔴 ");
 }
 loadNews();
 
-/* COMPLAINT */
-async function submitComplaint(){
-  const name=document.getElementById("name").value;
-  const phone=document.getElementById("phone").value;
-  const complaint=document.getElementById("complaintText").value;
-
-  await fetch("/api/data",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({name,phone,complaint})
+/* ANIMATION ON SCROLL */
+const sections=document.querySelectorAll(".section");
+window.addEventListener("scroll",()=>{
+  sections.forEach(sec=>{
+    if(sec.getBoundingClientRect().top<window.innerHeight-100){
+      sec.classList.add("show");
+    }
   });
+});
 
-  alert("Submitted ✅");
+/* FORM */
+async function submit(){
+  await fetch("/api/data",{method:"POST"});
+  alert("Submitted");
 }
 
 </script>
