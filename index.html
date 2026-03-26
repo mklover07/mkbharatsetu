@@ -22,7 +22,7 @@ header {
   font-weight: bold;
 }
 
-/* NAVBAR */
+/* NAV */
 nav {
   display: flex;
   justify-content: center;
@@ -32,29 +32,24 @@ nav a {
   color: white;
   padding: 12px 18px;
   text-decoration: none;
-  transition: 0.3s;
-}
-nav a:hover {
-  background: #0a2540;
-  transform: scale(1.05);
+  cursor: pointer;
 }
 
 /* HERO */
 .hero {
   text-align: center;
-  padding: 60px 20px;
-}
-.hero h1 {
-  font-size: 36px;
-}
-.hero p {
-  color: #555;
+  padding: 50px;
 }
 
 /* SECTION */
 .section {
-  padding: 40px 20px;
+  display: none;
+  padding: 40px;
   text-align: center;
+}
+
+.active {
+  display: block;
 }
 
 /* CARDS */
@@ -68,130 +63,122 @@ nav a:hover {
 .card {
   background: white;
   padding: 25px;
-  width: 260px;
+  width: 250px;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-}
-
-/* FORM */
-form {
-  max-width: 400px;
-  margin: auto;
-}
-form input, form textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-}
-button {
-  width: 100%;
-  padding: 10px;
-  background: #0a2540;
-  color: white;
-  border: none;
   cursor: pointer;
 }
 
-/* FOOTER */
-footer {
-  background: #0a2540;
-  color: white;
-  padding: 15px;
-  text-align: center;
+/* BACK BUTTON */
+.back {
+  margin-bottom: 20px;
+  display: inline-block;
+  cursor: pointer;
+  color: blue;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  MK Bharat Setu 🇮🇳
-</header>
+<header>MK Bharat Setu 🇮🇳</header>
 
 <nav>
-  <a href="#farmer">Farmer</a>
-  <a href="#student">Student</a>
-  <a href="#business">Business</a>
-  <a href="#complaint">Complaint</a>
+  <a onclick="showSection('home')">Home</a>
+  <a onclick="showSection('farmer')">Farmer</a>
+  <a onclick="showSection('student')">Student</a>
+  <a onclick="showSection('business')">Business</a>
+  <a onclick="showSection('complaint')">Complaint</a>
 </nav>
 
-<div class="hero">
-  <h1>One Platform for Every Indian</h1>
-  <p>Farmers • Students • Business • Public Support</p>
+<!-- HOME -->
+<div id="home" class="section active">
+  <div class="hero">
+    <h1>One Platform for Every Indian</h1>
+  </div>
 </div>
 
 <!-- FARMER -->
-<div class="section" id="farmer">
-  <h2>🌾 Farmer Section</h2>
+<div id="farmer" class="section">
+  <h2>Farmer Section</h2>
+
   <div class="cards">
-    <div class="card">Government Schemes</div>
-    <div class="card">MSP Rates</div>
-    <div class="card">Weather Updates</div>
+    <div class="card" onclick="showSection('schemes')">Government Schemes</div>
+    <div class="card" onclick="showSection('msp')">MSP Rates</div>
+    <div class="card" onclick="showSection('weather')">Weather</div>
   </div>
 </div>
 
 <!-- STUDENT -->
-<div class="section" id="student">
-  <h2>🎓 Student Section</h2>
+<div id="student" class="section">
+  <h2>Student Section</h2>
+
   <div class="cards">
-    <div class="card">Latest Jobs</div>
+    <div class="card" onclick="showSection('jobs')">Jobs</div>
     <div class="card">Exam Updates</div>
-    <div class="card">Study Material</div>
   </div>
 </div>
 
 <!-- BUSINESS -->
-<div class="section" id="business">
-  <h2>💼 Business Section</h2>
+<div id="business" class="section">
+  <h2>Business Section</h2>
+
   <div class="cards">
     <div class="card">Market Rates</div>
-    <div class="card">Business Ideas</div>
-    <div class="card">Finance & GST</div>
+    <div class="card">Ideas</div>
   </div>
 </div>
 
 <!-- COMPLAINT -->
-<div class="section" id="complaint">
-  <h2>🛡 Report Complaint</h2>
+<div id="complaint" class="section">
+  <h2>Complaint</h2>
 
-  <form id="form">
-    <input type="text" id="name" placeholder="Name" required>
-    <input type="text" id="phone" placeholder="Phone" required>
-    <textarea id="complaintText" placeholder="Complaint"></textarea>
-    <button type="submit">Submit</button>
-  </form>
-
+  <input id="name" placeholder="Name"><br><br>
+  <input id="phone" placeholder="Phone"><br><br>
+  <textarea id="text" placeholder="Complaint"></textarea><br><br>
+  <button onclick="submitForm()">Submit</button>
 </div>
 
-<footer>
-  © 2026 MK Bharat Setu | Built for Nation 🇮🇳
-</footer>
+<!-- SUB PAGES -->
+<div id="schemes" class="section">
+  <div class="back" onclick="showSection('farmer')">⬅ Back</div>
+  <h2>Government Schemes</h2>
+</div>
+
+<div id="msp" class="section">
+  <div class="back" onclick="showSection('farmer')">⬅ Back</div>
+  <h2>MSP Rates</h2>
+</div>
+
+<div id="weather" class="section">
+  <div class="back" onclick="showSection('farmer')">⬅ Back</div>
+  <h2>Weather Updates</h2>
+</div>
+
+<div id="jobs" class="section">
+  <div class="back" onclick="showSection('student')">⬅ Back</div>
+  <h2>Jobs</h2>
+</div>
 
 <script>
-document.getElementById("form").addEventListener("submit", function(e){
-  e.preventDefault();
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
 
-  fetch("/api/report", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+function submitForm() {
+  fetch('/api/report', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      name: document.getElementById("name").value,
-      phone: document.getElementById("phone").value,
-      complaint: document.getElementById("complaintText").value
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      complaint: document.getElementById('text').value
     })
   })
   .then(res => res.json())
-  .then(data => {
-    alert("Complaint Submitted Successfully");
-  });
-});
+  .then(() => alert('Submitted'));
+}
 </script>
 
 </body>
