@@ -40,3 +40,18 @@ fetch('/api/admin')
 
 </body>
 </html>
+<script>
+const token = localStorage.getItem("token");
+
+if (!token || token !== "mkbharat-token-123") {
+  window.location.href = "/login.html";
+}
+</script>
+<button onclick="logout()">Logout</button>
+
+<script>
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "/login.html";
+}
+</script>
