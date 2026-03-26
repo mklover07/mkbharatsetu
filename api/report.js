@@ -1,37 +1,38 @@
-import mongoose from "mongoose";
+let data = [];
 
-const MONGO_URL = process.env.MONGO_URL;
-
-let isConnected = false;
-
-async function connectDB() {
-  if (isConnected) return;
-  await mongoose.connect(MONGO_URL);
-  isConnected = true;
-}
-
-const ComplaintSchema = new mongoose.Schema({
-  name: String,
-  phone: String,
-  complaint: String,
-});
-
-const Complaint =
-  mongoose.models.Complaint ||
-  mongoose.model("Complaint", ComplaintSchema);
-
-export default async function handler(req, res) {
-  await connectDB();
-
+export default function handler(req, res) {
   if (req.method === "POST") {
-    const data = await Complaint.create(req.body);
-    return res.status(200).json(data);
+    const { name, phone, complaint } = req.body;
+
+    const newItem = {
+      id: Date.now(),
+      name,
+      phone,
+      complaint,
+      status: "Pending"
+    };
+
+    data.push(newItem);
+    return res.status(200).json({ success: true });
   }
 
   if (req.method === "GET") {
-    const data = await Complaint.find();
     return res.status(200).json(data);
   }
 
-  return res.status(405).json({ message: "Method not allowed" });
+  if (req.method === "DELETE") {
+    const { id } = req.body;
+    data = data.filter(item => item.id != id);
+    return res.status(200).json({ success: true });
+  }
+
+  if (req.method === "PUT") {
+    const { id, status } = req.body;
+
+    data = data.map(item =>
+      item.id == id ? { ...item, status } : item
+    );
+
+    return res.status(200).json({ success: true });
+  }
 }
