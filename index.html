@@ -182,4 +182,44 @@ loadLiveFeed();
 </script>
 
 </body>
-</html>
+</html><script>
+async function loadFarmerData(type) {
+  const container = document.getElementById("farmerData");
+
+  container.innerHTML = "Loading...";
+
+  try {
+    const res = await fetch("/api/data");
+    const data = await res.json();
+
+    if (type === "schemes") {
+      container.innerHTML = `
+        <h3>Government Schemes</h3>
+        <ul>
+          <li><a href="https://pmkisan.gov.in/" target="_blank">PM Kisan</a></li>
+          <li><a href="https://soilhealth.dac.gov.in/" target="_blank">Soil Health Card</a></li>
+        </ul>
+      `;
+    }
+
+    if (type === "msp") {
+      container.innerHTML = `
+        <h3>MSP Rates</h3>
+        <p>Wheat: ₹2275/qtl</p>
+        <p>Rice: ₹2183/qtl</p>
+      `;
+    }
+
+    if (type === "weather") {
+      container.innerHTML = `
+        <h3>Weather Update</h3>
+        <p>Temperature: 34°C</p>
+        <p>Condition: Sunny</p>
+      `;
+    }
+
+  } catch (err) {
+    container.innerHTML = "Error loading data";
+  }
+}
+</script>
