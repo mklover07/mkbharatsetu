@@ -10,13 +10,15 @@ body {
   background: #f5f5f5;
 }
 
+/* Header */
 header {
-  background: #004aad;
+  background: linear-gradient(90deg, #004aad, #007bff);
   color: white;
   padding: 15px;
   text-align: center;
 }
 
+/* Navbar */
 nav {
   background: #0066cc;
   padding: 10px;
@@ -30,11 +32,22 @@ nav a {
   font-weight: bold;
 }
 
+/* News Bar */
+.news-bar {
+  background: black;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Container */
 .container {
   padding: 30px;
   text-align: center;
 }
 
+/* Cards */
 .card {
   display: inline-block;
   background: white;
@@ -43,6 +56,7 @@ nav a {
   border-radius: 10px;
   cursor: pointer;
   transition: 0.3s;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
 
 .card:hover {
@@ -51,12 +65,15 @@ nav a {
   transform: scale(1.05);
 }
 
-.news-bar {
-  background: black;
-  color: white;
-  padding: 10px;
+/* Dynamic Content */
+#dynamicContent {
+  margin-top: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
 }
 </style>
+
 </head>
 
 <body>
@@ -73,7 +90,7 @@ nav a {
 </nav>
 
 <div class="news-bar">
-  <marquee>🚜 MSP Update | 📚 New Jobs | 📈 Market News | 🌦 Weather Alert</marquee>
+  <span id="newsFeed">Loading news...</span>
 </div>
 
 <div class="container">
@@ -82,35 +99,22 @@ nav a {
 
 <h2>Farmer Section</h2>
 
-<div class="card" onclick="openLink('schemes')">Government Schemes</div>
-<div class="card" onclick="openLink('msp')">MSP Rates</div>
-<div class="card" onclick="openLink('weather')">Weather Updates</div>
+<div class="card" onclick="loadFarmerData('schemes')">Government Schemes</div>
+
+<div class="card" onclick="loadFarmerData('msp')">MSP Rates</div>
+
+<div class="card" onclick="loadFarmerData('weather')">Weather Updates</div>
+
+<div id="dynamicContent"></div>
 
 </div>
 
 <script>
-function openLink(type) {
-  let url = "";
 
-  if (type === "schemes") {
-    url = "https://pmkisan.gov.in/";
-  }
-  else if (type === "msp") {
-    url = "https://agricoop.nic.in/";
-  }
-  else if (type === "weather") {
-    url = "https://mausam.imd.gov.in/";
-  }
+/* ======================
+   Farmer Dynamic System
+====================== */
 
-  window.open(url, "_blank");
-}
-</script>
-
-</body>
-</html>
-<script>
-
-// 🔹 Farmer Data Loader
 async function loadFarmerData(type) {
 
   let content = document.getElementById("dynamicContent");
@@ -151,27 +155,24 @@ async function loadFarmerData(type) {
 
 }
 
-</script>
-<div id="dynamicContent" style="margin-top:20px;"></div>
-onclick="loadFarmerData('schemes')"
-onclick="loadFarmerData('msp')"
-onclick="loadFarmerData('weather')"
-<script>
 
-async function loadLiveFeed(){
-  let feed = document.getElementById("newsFeed");
+/* ======================
+   Live News Feed System
+====================== */
+
+function loadLiveFeed(){
 
   const news = [
-    "🚜 MSP Updated",
-    "📚 Govt Jobs Released",
-    "📈 Market Trending",
-    "🌦 Weather Alert"
+    "🚜 MSP Rates Updated",
+    "📚 New Govt Jobs Released",
+    "📈 Market Trending Up",
+    "🌦 Weather Alert in India"
   ];
 
   let i = 0;
 
   setInterval(()=>{
-    feed.innerText = news[i];
+    document.getElementById("newsFeed").innerText = news[i];
     i = (i + 1) % news.length;
   }, 2000);
 }
@@ -179,6 +180,6 @@ async function loadLiveFeed(){
 loadLiveFeed();
 
 </script>
-<div class="news-bar">
-  <span id="newsFeed">Loading...</span>
-</div>
+
+</body>
+</html>
