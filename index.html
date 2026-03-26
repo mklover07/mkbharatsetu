@@ -226,4 +226,21 @@ fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss?
 </script>
 
 </body>
-</html>
+</html><script>
+async function submitComplaint(){
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const complaint = document.getElementById("complaint").value;
+
+  await fetch("/api/data", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ name, phone, complaint })
+  });
+
+  alert("Complaint Submitted ✅");
+}
+</script>
