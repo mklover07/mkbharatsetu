@@ -1,16 +1,176 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>MK Bharat Setu</title>
-</head>
-<body>
-  <h1>MK Bharat Setu Backend Running</h1>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MK Bharat Setu</title>
 
-  <form action="/api/report" method="POST">
-    <input name="name" placeholder="Name" required /><br><br>
-    <input name="phone" placeholder="Phone" required /><br><br>
-    <textarea name="complaint" placeholder="Complaint"></textarea><br><br>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+}
+
+/* Header */
+header {
+  background: #0a2540;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 24px;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: center;
+  background: #163d63;
+}
+nav a {
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+}
+nav a:hover {
+  background: #0a2540;
+}
+
+/* Sections */
+.section {
+  padding: 40px;
+  text-align: center;
+}
+.section h2 {
+  margin-bottom: 20px;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.card {
+  background: white;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Form */
+form input, form textarea {
+  width: 80%;
+  padding: 10px;
+  margin: 8px 0;
+}
+button {
+  padding: 10px 20px;
+  background: #0a2540;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Footer */
+footer {
+  background: #0a2540;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  MK Bharat Setu 🇮🇳
+</header>
+
+<nav>
+  <a href="#farmer">Farmer</a>
+  <a href="#student">Student</a>
+  <a href="#business">Business</a>
+  <a href="#complaint">Complaint</a>
+</nav>
+
+<!-- HERO -->
+<div class="section">
+  <h1>One Platform for Every Indian</h1>
+  <p>Farmers • Students • Business • Public Support</p>
+</div>
+
+<!-- FARMER -->
+<div class="section" id="farmer">
+  <h2>🌾 Farmer Section</h2>
+  <div class="cards">
+    <div class="card">Government Schemes</div>
+    <div class="card">MSP Rates</div>
+    <div class="card">Weather Updates</div>
+  </div>
+</div>
+
+<!-- STUDENT -->
+<div class="section" id="student">
+  <h2>🎓 Student Section</h2>
+  <div class="cards">
+    <div class="card">Latest Jobs</div>
+    <div class="card">Exam Updates</div>
+    <div class="card">Study Material</div>
+  </div>
+</div>
+
+<!-- BUSINESS -->
+<div class="section" id="business">
+  <h2>💼 Business Section</h2>
+  <div class="cards">
+    <div class="card">Market Rates</div>
+    <div class="card">Business Ideas</div>
+    <div class="card">Finance & GST</div>
+  </div>
+</div>
+
+<!-- COMPLAINT -->
+<div class="section" id="complaint">
+  <h2>🛡 Report Complaint</h2>
+
+  <form id="form">
+    <input type="text" id="name" placeholder="Name" required><br>
+    <input type="text" id="phone" placeholder="Phone" required><br>
+    <textarea id="complaintText" placeholder="Complaint"></textarea><br>
     <button type="submit">Submit</button>
   </form>
+
+</div>
+
+<footer>
+  © 2026 MK Bharat Setu | Truth • Security • Service
+</footer>
+
+<script>
+document.getElementById("form").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  fetch("/api/report", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: document.getElementById("name").value,
+      phone: document.getElementById("phone").value,
+      complaint: document.getElementById("complaintText").value
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert("Complaint Submitted Successfully");
+  });
+});
+</script>
+
 </body>
 </html>
