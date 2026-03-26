@@ -1,86 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MK Bharat Setu</title>
 
 <style>
 body {
+  margin:0;
   font-family: Arial;
-  margin: 0;
-  background: #f5f5f5;
+  background:#f5f7fa;
 }
 
-/* Header */
 header {
-  background: linear-gradient(90deg, #004aad, #007bff);
-  color: white;
-  padding: 15px;
-  text-align: center;
+  background: linear-gradient(90deg,#004aad,#007bff);
+  color:#fff;
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
 }
 
-/* Navbar */
 nav {
-  background: #0066cc;
-  padding: 10px;
-  text-align: center;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  background:#0066cc;
+  padding:10px;
 }
 
 nav a {
-  color: white;
-  margin: 10px;
-  text-decoration: none;
-  font-weight: bold;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
 }
 
-/* News Bar */
-.news-bar {
-  background: black;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
+.hero {
+  text-align:center;
+  padding:40px;
 }
 
-/* Container */
-.container {
-  padding: 30px;
-  text-align: center;
+.section {
+  padding:20px;
+  text-align:center;
 }
 
-/* Cards */
 .card {
-  display: inline-block;
-  background: white;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  display:inline-block;
+  background:white;
+  padding:15px;
+  margin:10px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  cursor:pointer;
 }
 
-.card:hover {
-  background: #007bff;
-  color: white;
-  transform: scale(1.05);
+#newsFeed {
+  background:black;
+  color:white;
+  padding:10px;
 }
 
-/* Dynamic Content */
-#dynamicContent {
-  margin-top: 20px;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-}
 </style>
-
 </head>
 
 <body>
 
-<header>
-  <h2>MK Bharat Setu</h2>
-</header>
+<header>MK Bharat Setu</header>
 
 <nav>
   <a href="#">Farmer</a>
@@ -89,139 +75,101 @@ nav a {
   <a href="#">Complaint</a>
 </nav>
 
-<div class="news-bar">
-  <span id="newsFeed">Loading news...</span>
+<!-- 🔴 LIVE NEWS -->
+<div id="newsFeed">
+  <marquee id="newsText">Loading news...</marquee>
 </div>
 
-<div class="container">
+<div class="hero">
+  <h1>One Platform for Every Indian</h1>
+  <p>Farmers • Students • Business • Public Support</p>
+</div>
 
-<h1>One Platform for Every Indian</h1>
+<!-- 🌾 FARMER -->
+<div class="section">
+  <h2>🌾 Farmer Section</h2>
 
-<h2>Farmer Section</h2><div id="farmerData" style="margin-top:20px;"></div>
+  <div class="card" onclick="loadFarmerData('schemes')">Government Schemes</div>
+  <div class="card" onclick="loadFarmerData('msp')">MSP Rates</div>
+  <div class="card" onclick="loadWeather()">Weather Updates</div>
 
-<div class="card" onclick="loadFarmerData('schemes')">Government Schemes</div>
-
-<div class="card" onclick="loadFarmerData('msp')">MSP Rates</div>
-
-<div class="card" onclick="loadFarmerData('weather')">Weather Updates</div>
-
-<div id="dynamicContent"></div>
-
+  <div id="farmerData" style="margin-top:20px;"></div>
 </div>
 
 <script>
 
-/* ======================
-   Farmer Dynamic System
-====================== */
-
+// 🔹 Farmer Static + Dynamic
 async function loadFarmerData(type) {
+  const container = document.getElementById("farmerData");
+  container.innerHTML = "Loading...";
 
-  let content = document.getElementById("dynamicContent");
-  content.innerHTML = "Loading...";
-
-  if(type === "schemes"){
-    content.innerHTML = `
+  if (type === "schemes") {
+    container.innerHTML = `
       <h3>Government Schemes</h3>
       <ul>
-        <li><a href="https://pmkisan.gov.in/" target="_blank">PM Kisan Yojana</a></li>
-        <li><a href="https://enam.gov.in/" target="_blank">e-NAM Portal</a></li>
+        <li><a href="https://pmkisan.gov.in/" target="_blank">PM Kisan</a></li>
+        <li><a href="https://soilhealth.dac.gov.in/" target="_blank">Soil Health Card</a></li>
       </ul>
     `;
   }
 
-  else if(type === "msp"){
-    content.innerHTML = `
+  if (type === "msp") {
+    container.innerHTML = `
       <h3>MSP Rates</h3>
-      <p>Wheat: ₹2275/quintal</p>
-      <p>Rice: ₹2183/quintal</p>
+      <p>Wheat: ₹2275/qtl</p>
+      <p>Rice: ₹2183/qtl</p>
     `;
   }
+}
 
-  else if(type === "weather"){
-    try {
-      let res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=28.6&longitude=77.2&current_weather=true");
-      let data = await res.json();
+// 🌦 WEATHER API
+async function loadWeather() {
+  const container = document.getElementById("farmerData");
+  container.innerHTML = "Loading Weather...";
 
-      content.innerHTML = `
-        <h3>Weather Update</h3>
-        <p>Temperature: ${data.current_weather.temperature}°C</p>
-        <p>Wind Speed: ${data.current_weather.windspeed} km/h</p>
-      `;
-    } catch (err) {
-      content.innerHTML = "Weather API error";
-    }
+  try {
+    const apiKey = "YOUR_API_KEY";  // 🔴 यहाँ अपनी API डालो
+    const city = "Kota";
+
+    const res = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+    );
+
+    const data = await res.json();
+
+    container.innerHTML = `
+      <h3>🌦 Weather (${city})</h3>
+      <p>Temp: ${data.main.temp}°C</p>
+      <p>${data.weather[0].description}</p>
+      <p>Humidity: ${data.main.humidity}%</p>
+    `;
+  } catch {
+    container.innerHTML = "Weather failed";
   }
-
 }
 
+// 📰 NEWS API
+async function loadNews() {
+  try {
+    const res = await fetch("https://api.currentsapi.services/v1/latest-news?apiKey=YOUR_NEWS_API");
+    const data = await res.json();
 
-/* ======================
-   Live News Feed System
-====================== */
+    let headlines = data.news.map(n => n.title).join(" 🔴 ");
 
-function loadLiveFeed(){
+    document.getElementById("newsText").innerText = headlines;
 
-  const news = [
-    "🚜 MSP Rates Updated",
-    "📚 New Govt Jobs Released",
-    "📈 Market Trending Up",
-    "🌦 Weather Alert in India"
-  ];
-
-  let i = 0;
-
-  setInterval(()=>{
-    document.getElementById("newsFeed").innerText = news[i];
-    i = (i + 1) % news.length;
-  }, 2000);
+  } catch {
+    document.getElementById("newsText").innerText = "News failed";
+  }
 }
 
-loadLiveFeed();
+// Auto Load
+loadNews();
+
+// Auto Refresh
+setInterval(loadNews, 60000);
 
 </script>
 
 </body>
-</html><script>
-async function loadFarmerData(type) {
-  const container = document.getElementById("farmerData");
-
-  container.innerHTML = "Loading...";
-
-  try {
-    const res = await fetch("/api/data");
-    const data = await res.json();
-
-    if (type === "schemes") {
-      container.innerHTML = `
-        <h3>Government Schemes</h3>
-        <ul>
-          <li><a href="https://pmkisan.gov.in/" target="_blank">PM Kisan</a></li>
-          <li><a href="https://soilhealth.dac.gov.in/" target="_blank">Soil Health Card</a></li>
-        </ul>
-      `;
-    }
-
-    if (type === "msp") {
-      container.innerHTML = `
-        <h3>MSP Rates</h3>
-        <p>Wheat: ₹2275/qtl</p>
-        <p>Rice: ₹2183/qtl</p>
-      `;
-    }
-
-    if (type === "weather") {
-      container.innerHTML = `
-        <h3>Weather Update</h3>
-        <p>Temperature: 34°C</p>
-        <p>Condition: Sunny</p>
-      `;
-    }
-
-  } catch (err) {
-    container.innerHTML = "Error loading data";
-  }
-}
-</script><button onclick="loadFarmerData('schemes')">Government Schemes</button>
-<button onclick="loadFarmerData('msp')">MSP Rates</button>
-<button onclick="loadFarmerData('weather')">Weather Updates</button>
+</html>
