@@ -9,297 +9,178 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-
-/* GLOBAL */
 html{scroll-behavior:smooth;}
-
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
   background: radial-gradient(circle at top,#1e3c72,#2a5298,#0f2027);
   color:white;
 }
-
-/* HEADER */
 .header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  position:sticky; top:0; z-index:1000;
+  display:flex; justify-content:space-between;
   padding:15px 30px;
   backdrop-filter:blur(20px);
   background:rgba(255,255,255,0.08);
 }
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:bold;
-}
-
-.profile img{
-  border-radius:50%;
-}
-
-/* NAV */
-nav{
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  padding:10px;
-}
-
-nav a{
-  padding:8px 15px;
-  border-radius:20px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-nav a:hover{
-  background:#00c6ff;
-  color:black;
-}
-
-/* NEWS */
-#newsBar{
-  background:linear-gradient(to right,#000,#111,#000);
-  padding:10px;
-  overflow:hidden;
-}
-
-#newsText{
-  display:inline-block;
-  white-space:nowrap;
-  animation:scroll 20s linear infinite;
-  color:#00ffcc;
-}
-
-@keyframes scroll{
-  0%{transform:translateX(100%)}
-  100%{transform:translateX(-100%)}
-}
-
-/* HERO */
-.hero{
-  text-align:center;
-  padding:60px 20px;
-}
-
-.hero h1{
-  font-size:42px;
-  text-shadow:0 0 25px rgba(0,198,255,0.7);
-}
-
-.hero p{
-  font-size:18px;
-  opacity:0.8;
-}
-
-/* SECTION */
-.section{
-  text-align:center;
-  padding:30px;
-  opacity:0;
-  transform:translateY(40px);
-  transition:0.6s;
-}
-
-.section.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* CARDS */
-.cards{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  flex-wrap:wrap;
-}
-
+nav{display:flex;justify-content:center;gap:20px;padding:10px;}
+nav a{cursor:pointer;padding:8px 15px;border-radius:20px;}
+nav a:hover{background:#00c6ff;color:black;}
+.section{padding:30px;text-align:center;}
+.cards{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;}
 .card{
   background:linear-gradient(145deg,#1e3c72,#2a5298);
-  padding:15px 25px;
-  border-radius:20px;
-  cursor:pointer;
-  transition:0.4s;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  padding:15px 25px;border-radius:20px;
+  cursor:pointer;transition:0.4s;
 }
-
-.card:hover{
-  transform:translateY(-8px) scale(1.08);
-  box-shadow:0 15px 40px rgba(0,198,255,0.5);
-}
-
-.card:active{
-  transform:scale(0.95);
-}
-
-/* FORM */
-input,textarea{
-  padding:10px;
-  width:250px;
-  border-radius:10px;
-  border:none;
-}
-
-button{
-  padding:10px 20px;
-  background:#00c6ff;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-}
-
-/* FOOTER */
-.footer{
-  text-align:center;
-  padding:30px;
-  background:rgba(0,0,0,0.4);
-}
-
+.card:hover{transform:scale(1.08);}
+input,textarea{padding:10px;width:250px;border-radius:10px;border:none;}
+button{padding:10px 20px;background:#00c6ff;border:none;border-radius:20px;}
+.alert{background:red;padding:10px;margin:5px;border-radius:10px;}
 </style>
-
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-  <div class="logo">
-    <img src="https://i.ibb.co/8Xb3b2k/india.png" width="35">
-    <div>
-      MK Bharat Setu<br>
-      <small style="opacity:0.6;">MK Global Nexus</small>
-    </div>
-  </div>
-
-  <div class="profile">
-    <img src="https://i.ibb.co/ZYW3VTp/profile.png" width="40">
-  </div>
+  MK Bharat Setu | MK Global Nexus
 </div>
 
-<!-- NAV -->
 <nav>
   <a onclick="go('farmer')">Farmer</a>
   <a onclick="go('student')">Student</a>
   <a onclick="go('business')">Business</a>
-  <a onclick="go('about')">About</a>
+  <a onclick="go('alerts')">Alerts</a>
   <a onclick="go('complaint')">Complaint</a>
+  <a onclick="go('guide')">Guide</a>
 </nav>
 
-<!-- NEWS -->
-<div id="newsBar">
-  <div id="newsText">Loading news...</div>
+<div class="section">
+  <h1>MK Bharat Setu 🇮🇳</h1>
+  <div id="weather">Loading Weather...</div>
 </div>
 
-<!-- HERO -->
-<div class="hero">
-  <h1>MK Bharat Setu 🇮🇳</h1>
-  <p>Powered by MK Global Nexus</p>
-  <p>Farmers • Students • Business • Public Support</p>
-  <div id="weather">Loading weather...</div>
+<!-- CYBER ALERT -->
+<div id="alerts" class="section">
+<h2>🚨 Cyber Alerts</h2>
+<div id="alertsBox"></div>
 </div>
 
 <!-- FARMER -->
 <div id="farmer" class="section">
-  <h2>🌾 Farmer</h2>
-  <div class="cards">
-    <div class="card" onclick="load('pmkisan.gov.in')">Schemes</div>
-    <div class="card" onclick="load('agmarknet.gov.in')">MSP</div>
-    <div class="card" onclick="loadWeather()">Weather</div>
-  </div>
+<h2>🌾 Farmer</h2>
+<div class="cards">
+<div class="card" onclick="openLink('https://pmkisan.gov.in')">Schemes</div>
+<div class="card" onclick="openLink('https://agmarknet.gov.in')">MSP</div>
+<div class="card" onclick="loadWeather()">Weather</div>
+</div>
 </div>
 
 <!-- STUDENT -->
 <div id="student" class="section">
-  <h2>🎓 Student</h2>
-  <div class="cards">
-    <div class="card" onclick="load('freejobalert.com')">Jobs</div>
-    <div class="card" onclick="load('ncert.nic.in')">Notes</div>
-    <div class="card" onclick="load('scholarships.gov.in')">Scholarship</div>
-  </div>
+<h2>🎓 Student</h2>
+<div class="cards">
+<div class="card" onclick="openLink('https://freejobalert.com')">Jobs</div>
+<div class="card" onclick="openLink('https://ncert.nic.in')">Notes</div>
+<div class="card" onclick="openLink('https://scholarships.gov.in')">Scholarship</div>
+</div>
 </div>
 
 <!-- BUSINESS -->
 <div id="business" class="section">
-  <h2>💼 Business</h2>
-  <div class="cards">
-    <div class="card" onclick="load('economictimes.indiatimes.com')">Market</div>
-    <div class="card" onclick="load('startupindia.gov.in')">Startup</div>
-    <div class="card" onclick="load('indiafilings.com')">Tools</div>
-  </div>
+<h2>💼 Business</h2>
+<div class="cards">
+<div class="card" onclick="openLink('https://economictimes.indiatimes.com')">Market</div>
+<div class="card" onclick="openLink('https://startupindia.gov.in')">Startup</div>
+<div class="card" onclick="openLink('https://indiafilings.com')">Tools</div>
 </div>
-
-<!-- ABOUT -->
-<div id="about" class="section">
-  <h2>🏢 About</h2>
-  <p>MK Global Nexus is a digital platform focused on cyber security and public awareness.</p>
-  <p><strong>Founder: Manoj Meena</strong></p>
 </div>
 
 <!-- COMPLAINT -->
 <div id="complaint" class="section">
-  <h2>📢 Complaint</h2>
-
-  <input id="name" placeholder="Name"><br><br>
-  <input id="phone" placeholder="Phone"><br><br>
-  <textarea id="complaintText"></textarea><br><br>
-
-  <button onclick="submit()">Submit</button>
+<h2>📢 Complaint</h2>
+<input id="name" placeholder="Name"><br><br>
+<input id="phone" placeholder="Phone"><br><br>
+<textarea id="complaintText"></textarea><br><br>
+<button onclick="submitComplaint()">Submit</button>
 </div>
 
-<!-- FOOTER -->
-<div class="footer">
-  MK Global Nexus © 2026
+<!-- TRACK -->
+<div class="section">
+<h2>🔍 Track Complaint</h2>
+<input id="trackId" placeholder="Enter ID"><br><br>
+<button onclick="track()">Track</button>
+<div id="statusBox"></div>
+</div>
+
+<!-- SMART GUIDE -->
+<div id="guide" class="section">
+<h2>🤖 Smart Guide</h2>
+<input id="query" placeholder="Ask..."><br><br>
+<button onclick="ask()">Search</button>
+<div id="answerBox"></div>
 </div>
 
 <script>
 
-/* SCROLL */
-function go(id){
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
-}
+/* NAV */
+function go(id){document.getElementById(id).scrollIntoView();}
 
-/* OPEN LINK */
-function load(url){
-  window.open("https://"+url,"_blank");
+/* ALERT */
+const alerts=[
+"🚨 UPI Scam Active",
+"⚠ Fake Loan Apps",
+"🚨 OTP Fraud"
+];
+function loadAlerts(){
+let html="";
+alerts.forEach(a=>html+=`<div class="alert">${a}</div>`);
+document.getElementById("alertsBox").innerHTML=html;
 }
+loadAlerts();
 
 /* WEATHER */
 async function loadWeather(){
-  const res=await fetch("https://api.open-meteo.com/v1/forecast?latitude=26.9&longitude=75.8&current_weather=true");
-  const d=await res.json();
-  document.getElementById("weather").innerHTML="🌤 "+d.current_weather.temperature+"°C";
+let res=await fetch("https://api.open-meteo.com/v1/forecast?latitude=26.9&longitude=75.8&current_weather=true");
+let d=await res.json();
+document.getElementById("weather").innerHTML="Temp "+d.current_weather.temperature+"°C";
 }
 
-/* NEWS */
-async function loadNews(){
-  const res=await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en");
-  const data=await res.json();
-  document.getElementById("newsText").innerText=
-    data.items.map(x=>x.title).join(" 🔴 ");
+/* LINKS */
+function openLink(url){window.open(url);}
+
+/* COMPLAINT */
+let data=[];
+function generateID(){return "MK"+Math.floor(Math.random()*100000);}
+
+function submitComplaint(){
+let id=generateID();
+let obj={
+id:id,
+name:document.getElementById("name").value,
+complaint:document.getElementById("complaintText").value,
+status:"Pending"
+};
+data.push(obj);
+alert("Submitted ID:"+id);
 }
-loadNews();
 
-/* ANIMATION ON SCROLL */
-const sections=document.querySelectorAll(".section");
-window.addEventListener("scroll",()=>{
-  sections.forEach(sec=>{
-    if(sec.getBoundingClientRect().top<window.innerHeight-100){
-      sec.classList.add("show");
-    }
-  });
-});
+/* TRACK */
+function track(){
+let id=document.getElementById("trackId").value;
+let f=data.find(x=>x.id===id);
+document.getElementById("statusBox").innerHTML=
+f?f.status:"Not Found";
+}
 
-/* FORM */
-async function submit(){
-  await fetch("/api/data",{method:"POST"});
-  alert("Submitted");
+/* SMART GUIDE */
+function ask(){
+let q=document.getElementById("query").value.toLowerCase();
+let ans="No data";
+if(q.includes("job")) ans="Visit freejobalert.com";
+if(q.includes("scheme")) ans="Visit pmkisan.gov.in";
+if(q.includes("loan")) ans="Avoid fake apps";
+document.getElementById("answerBox").innerHTML=ans;
 }
 
 </script>
