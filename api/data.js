@@ -1,53 +1,26 @@
-import { MongoClient } from "mongodb";
+let complaints = [];
 
-let client;
+export default function handler(req, res) {
 
-export default async function handler(req, res) {
-
-  try {
-
-    if (!process.env.MONGO_URL) {
-      return res.status(500).json({ error: "MONGO_URL missing" });
-    }
-
-    if (!client) {
-      client = new MongoClient(process.env.MONGO_URL);
-      await client.connect();
-    }
-
-    const db = client.db("mkbharat");
-    const col = db.collection("complaints");
-
-    // GET
-    if (req.method === "GET") {
-      const data = await col.find().toArray();
-      return res.json(data);
-    }
-
-    // POST
-    if (req.method === "POST") {
-      await col.insertOne(req.body);
-      return res.json({ msg: "Saved" });
-    }
-
-    // PUT
-    if (req.method === "PUT") {
-      const { id, status } = req.body;
-      await col.updateOne({ id }, { $set: { status } });
-      return res.json({ msg: "Updated" });
-    }
-
-    // DELETE
-    if (req.method === "DELETE") {
-      const { id } = req.body;
-      await col.deleteOne({ id });
-      return res.json({ msg: "Deleted" });
-    }
-
-    res.status(405).end();
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
+  // GET
+  if (req.method === "GET") {
+    return res.json(complaints);
   }
+
+  // POST
+  if (req.method === "POST") {
+    const data = req.body;
+    complaints.push(data);
+    return res.json({ msg: "Saved" });
+  }
+
+  // PUT
+  if (req.method === "PUT") {
+    const { id, status } = req.body;
+    const item = complaints.find(x => x.id === id);
+    if (item) item.status = status;
+    return res.json({ msg: "Updated" });
+  }
+
+  res.status(405).end();
 }
