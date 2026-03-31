@@ -1,186 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>MK Bharat Setu</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+<title>Admin Login</title>
 <style>
-html{scroll-behavior:smooth;}
-body{
-  margin:0;
-  font-family:'Poppins',sans-serif;
-  background: radial-gradient(circle at top,#1e3c72,#2a5298,#0f2027);
-  color:white;
-}
-.header{
-  position:sticky; top:0; z-index:1000;
-  display:flex; justify-content:space-between;
-  padding:15px 30px;
-  backdrop-filter:blur(20px);
-  background:rgba(255,255,255,0.08);
-}
-nav{display:flex;justify-content:center;gap:20px;padding:10px;}
-nav a{cursor:pointer;padding:8px 15px;border-radius:20px;}
-nav a:hover{background:#00c6ff;color:black;}
-.section{padding:30px;text-align:center;}
-.cards{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;}
-.card{
-  background:linear-gradient(145deg,#1e3c72,#2a5298);
-  padding:15px 25px;border-radius:20px;
-  cursor:pointer;transition:0.4s;
-}
-.card:hover{transform:scale(1.08);}
-input,textarea{padding:10px;width:250px;border-radius:10px;border:none;}
+body{background:#111;color:white;text-align:center;font-family:sans-serif;}
+input{padding:10px;margin:10px;border-radius:10px;}
 button{padding:10px 20px;background:#00c6ff;border:none;border-radius:20px;}
-.alert{background:red;padding:10px;margin:5px;border-radius:10px;}
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  MK Bharat Setu | MK Global Nexus
-</div>
+<h2>Admin Login 🔐</h2>
 
-<nav>
-  <a onclick="go('farmer')">Farmer</a>
-  <a onclick="go('student')">Student</a>
-  <a onclick="go('business')">Business</a>
-  <a onclick="go('alerts')">Alerts</a>
-  <a onclick="go('complaint')">Complaint</a>
-  <a onclick="go('guide')">Guide</a>
-</nav>
+<input id="user" placeholder="Username"><br>
+<input id="pass" type="password" placeholder="Password"><br>
 
-<div class="section">
-  <h1>MK Bharat Setu 🇮🇳</h1>
-  <div id="weather">Loading Weather...</div>
-</div>
-
-<!-- CYBER ALERT -->
-<div id="alerts" class="section">
-<h2>🚨 Cyber Alerts</h2>
-<div id="alertsBox"></div>
-</div>
-
-<!-- FARMER -->
-<div id="farmer" class="section">
-<h2>🌾 Farmer</h2>
-<div class="cards">
-<div class="card" onclick="openLink('https://pmkisan.gov.in')">Schemes</div>
-<div class="card" onclick="openLink('https://agmarknet.gov.in')">MSP</div>
-<div class="card" onclick="loadWeather()">Weather</div>
-</div>
-</div>
-
-<!-- STUDENT -->
-<div id="student" class="section">
-<h2>🎓 Student</h2>
-<div class="cards">
-<div class="card" onclick="openLink('https://freejobalert.com')">Jobs</div>
-<div class="card" onclick="openLink('https://ncert.nic.in')">Notes</div>
-<div class="card" onclick="openLink('https://scholarships.gov.in')">Scholarship</div>
-</div>
-</div>
-
-<!-- BUSINESS -->
-<div id="business" class="section">
-<h2>💼 Business</h2>
-<div class="cards">
-<div class="card" onclick="openLink('https://economictimes.indiatimes.com')">Market</div>
-<div class="card" onclick="openLink('https://startupindia.gov.in')">Startup</div>
-<div class="card" onclick="openLink('https://indiafilings.com')">Tools</div>
-</div>
-</div>
-
-<!-- COMPLAINT -->
-<div id="complaint" class="section">
-<h2>📢 Complaint</h2>
-<input id="name" placeholder="Name"><br><br>
-<input id="phone" placeholder="Phone"><br><br>
-<textarea id="complaintText"></textarea><br><br>
-<button onclick="submitComplaint()">Submit</button>
-</div>
-
-<!-- TRACK -->
-<div class="section">
-<h2>🔍 Track Complaint</h2>
-<input id="trackId" placeholder="Enter ID"><br><br>
-<button onclick="track()">Track</button>
-<div id="statusBox"></div>
-</div>
-
-<!-- SMART GUIDE -->
-<div id="guide" class="section">
-<h2>🤖 Smart Guide</h2>
-<input id="query" placeholder="Ask..."><br><br>
-<button onclick="ask()">Search</button>
-<div id="answerBox"></div>
-</div>
+<button onclick="login()">Login</button>
 
 <script>
 
-/* NAV */
-function go(id){document.getElementById(id).scrollIntoView();}
+function login(){
 
-/* ALERT */
-const alerts=[
-"🚨 UPI Scam Active",
-"⚠ Fake Loan Apps",
-"🚨 OTP Fraud"
-];
-function loadAlerts(){
-let html="";
-alerts.forEach(a=>html+=`<div class="alert">${a}</div>`);
-document.getElementById("alertsBox").innerHTML=html;
-}
-loadAlerts();
+  const u = document.getElementById("user").value;
+  const p = document.getElementById("pass").value;
 
-/* WEATHER */
-async function loadWeather(){
-let res=await fetch("https://api.open-meteo.com/v1/forecast?latitude=26.9&longitude=75.8&current_weather=true");
-let d=await res.json();
-document.getElementById("weather").innerHTML="Temp "+d.current_weather.temperature+"°C";
-}
+  if(u==="admin" && p==="12345"){
+    sessionStorage.setItem("admin","true");
+    window.location.href="admin.html";
+  } else {
+    alert("Wrong Credentials ❌");
+  }
 
-/* LINKS */
-function openLink(url){window.open(url);}
-
-/* COMPLAINT */
-let data=[];
-function generateID(){return "MK"+Math.floor(Math.random()*100000);}
-
-function submitComplaint(){
-let id=generateID();
-let obj={
-id:id,
-name:document.getElementById("name").value,
-complaint:document.getElementById("complaintText").value,
-status:"Pending"
-};
-data.push(obj);
-alert("Submitted ID:"+id);
-}
-
-/* TRACK */
-function track(){
-let id=document.getElementById("trackId").value;
-let f=data.find(x=>x.id===id);
-document.getElementById("statusBox").innerHTML=
-f?f.status:"Not Found";
-}
-
-/* SMART GUIDE */
-function ask(){
-let q=document.getElementById("query").value.toLowerCase();
-let ans="No data";
-if(q.includes("job")) ans="Visit freejobalert.com";
-if(q.includes("scheme")) ans="Visit pmkisan.gov.in";
-if(q.includes("loan")) ans="Avoid fake apps";
-document.getElementById("answerBox").innerHTML=ans;
 }
 
 </script>
