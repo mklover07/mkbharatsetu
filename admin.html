@@ -82,4 +82,11 @@ async function del(id){
 </script>
 
 </body>
-</html>
+</html><button onclick="logout()">Logout</button>
+
+<script>
+function logout(){
+  sessionStorage.removeItem("admin");
+  window.location.href="login.html";
+}
+</script>
