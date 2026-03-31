@@ -12,20 +12,35 @@ export default async function handler(req, res) {
   const db = client.db("mkbharat");
   const col = db.collection("complaints");
 
-  // SAVE DATA
-  if (req.method === "POST") {
-    const data = req.body;
-
-    await col.insertOne(data);
-
-    return res.status(200).json({ message: "Saved" });
-  }
-
-  // GET DATA
+  // GET all
   if (req.method === "GET") {
     const data = await col.find().toArray();
-    return res.status(200).json(data);
+    return res.json(data);
   }
 
-  res.status(405).json({ message: "Method not allowed" });
+  // POST (add complaint)
+  if (req.method === "POST") {
+    await col.insertOne(req.body);
+    return res.json({ msg: "Saved" });
+  }
+
+  // PUT (update status)
+  if (req.method === "PUT") {
+    const { id, status } = req.body;
+
+    await col.updateOne({ id }, { $set: { status } });
+
+    return res.json({ msg: "Updated" });
+  }
+
+  // DELETE
+  if (req.method === "DELETE") {
+    const { id } = req.body;
+
+    await col.deleteOne({ id });
+
+    return res.json({ msg: "Deleted" });
+  }
+
+  res.status(405).end();
 }
