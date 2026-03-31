@@ -1,285 +1,132 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>MK Bharat Setu</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
 <style>
-html{scroll-behavior:smooth;}
-body{
-  margin:0;
-  font-family:'Poppins',sans-serif;
-  background: radial-gradient(circle at top,#1e3c72,#2a5298,#0f2027);
-  color:white;
-}
-
-/* HEADER */
-.header{
-  position:sticky;
-  top:0;
-  display:flex;
-  justify-content:space-between;
-  padding:15px 20px;
-  backdrop-filter:blur(15px);
-  background:rgba(255,255,255,0.08);
-}
-
-/* NAV */
-nav{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  padding:10px;
-}
-nav a{
-  padding:6px 12px;
-  border-radius:20px;
-  cursor:pointer;
-}
-nav a:hover{background:#00c6ff;color:black;}
-
-/* HERO */
-.hero{
-  text-align:center;
-  padding:40px 20px;
-}
-.hero h1{
-  font-size:36px;
-  text-shadow:0 0 15px #00c6ff;
-}
-
-/* SECTION */
-.section{
-  padding:25px;
-  text-align:center;
-}
-
-/* CARDS */
-.cards{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-}
-.card{
-  background:linear-gradient(145deg,#1e3c72,#2a5298);
-  padding:12px 18px;
-  border-radius:15px;
-  cursor:pointer;
-}
-.card:hover{
-  transform:scale(1.05);
-}
-
-/* ALERT */
-.alert{
-  background:red;
-  padding:8px;
-  margin:5px;
-  border-radius:10px;
-}
-
-/* FORM */
-input,textarea{
-  padding:10px;
-  width:250px;
-  border-radius:10px;
-  border:none;
-}
-button{
-  padding:10px 20px;
-  background:#00c6ff;
-  border:none;
-  border-radius:20px;
-}
-
-/* OUTPUT */
-.output{
-  margin-top:15px;
-}
-
-/* FOOTER */
-.footer{
-  text-align:center;
-  padding:20px;
-  background:rgba(0,0,0,0.4);
-}
+body{margin:0;font-family:sans-serif;background:#0f2027;color:white;text-align:center;}
+.section{padding:20px;}
+input,textarea,select{padding:10px;margin:5px;border-radius:10px;border:none;width:250px;}
+button{padding:10px 20px;background:#00c6ff;border:none;border-radius:20px;}
+.card{border:1px solid white;margin:10px;padding:10px;border-radius:10px;}
 </style>
-
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div>MK Bharat Setu</div>
-  <div style="font-size:12px;">MK Global Nexus</div>
+<h2>MK Bharat Setu 🇮🇳</h2>
+
+<!-- SUBMIT -->
+<div class="section">
+<h3>Submit Complaint</h3>
+<input id="name" placeholder="Name"><br>
+<input id="phone" placeholder="Phone"><br>
+<textarea id="complaintText" placeholder="Complaint"></textarea><br>
+<button onclick="submitComplaint()">Submit</button>
 </div>
 
-<!-- NAV -->
-<nav>
-  <a onclick="go('home')">Home</a>
-  <a onclick="go('alerts')">Alerts</a>
-  <a onclick="go('farmer')">Farmer</a>
-  <a onclick="go('student')">Student</a>
-  <a onclick="go('business')">Business</a>
-  <a onclick="go('complaint')">Complaint</a>
-  <a onclick="go('guide')">Guide</a>
-</nav>
-
-<!-- HERO -->
-<div id="home" class="hero">
-  <h1>MK Bharat Setu 🇮🇳</h1>
-  <p>India Utility + Cyber + Complaint Platform</p>
-  <div id="weather">Loading weather...</div>
+<!-- TRACK -->
+<div class="section">
+<h3>Track Complaint</h3>
+<input id="trackId" placeholder="Enter ID"><br>
+<button onclick="track()">Track</button>
+<div id="statusBox"></div>
 </div>
 
-<!-- CYBER ALERT -->
-<div id="alerts" class="section">
-  <h2>🚨 Cyber Alerts</h2>
-  <div id="alertsBox"></div>
+<!-- ADMIN VIEW -->
+<div class="section">
+<h3>All Complaints</h3>
+<button onclick="loadComplaints()">Load</button>
+<div id="allData"></div>
 </div>
 
-<!-- FARMER -->
-<div id="farmer" class="section">
-  <h2>🌾 Farmer</h2>
-  <div class="cards">
-    <div class="card" onclick="openLink('https://pmkisan.gov.in')">Schemes</div>
-    <div class="card" onclick="openLink('https://agmarknet.gov.in')">MSP</div>
-    <div class="card" onclick="loadWeather()">Weather</div>
-  </div>
-</div>
-
-<!-- STUDENT -->
-<div id="student" class="section">
-  <h2>🎓 Student</h2>
-  <div class="cards">
-    <div class="card" onclick="openLink('https://freejobalert.com')">Jobs</div>
-    <div class="card" onclick="openLink('https://ncert.nic.in')">Notes</div>
-    <div class="card" onclick="openLink('https://scholarships.gov.in')">Scholarship</div>
-  </div>
-</div>
-
-<!-- BUSINESS -->
-<div id="business" class="section">
-  <h2>💼 Business</h2>
-  <div class="cards">
-    <div class="card" onclick="openLink('https://economictimes.indiatimes.com')">Market</div>
-    <div class="card" onclick="openLink('https://startupindia.gov.in')">Startup</div>
-    <div class="card" onclick="openLink('https://indiafilings.com')">Tools</div>
-  </div>
-</div>
-
-<!-- COMPLAINT -->
-<div id="complaint" class="section">
-  <h2>📢 Complaint System</h2>
-
-  <input id="name" placeholder="Name"><br><br>
-  <input id="phone" placeholder="Phone"><br><br>
-  <textarea id="complaintText" placeholder="Write complaint"></textarea><br><br>
-
-  <button onclick="submitComplaint()">Submit</button>
-
-  <div class="output">
-    <h3>Track Complaint</h3>
-    <input id="trackId" placeholder="Enter ID"><br><br>
-    <button onclick="track()">Track</button>
-    <div id="statusBox"></div>
-  </div>
-</div>
-
-<!-- SMART GUIDE -->
-<div id="guide" class="section">
-  <h2>🤖 Smart Guide</h2>
-
-  <input id="query" placeholder="Ask anything..."><br><br>
-  <button onclick="ask()">Search</button>
-
-  <div id="answerBox"></div>
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  MK Global Nexus © 2026
+<!-- UPDATE -->
+<div class="section">
+<h3>Update Status</h3>
+<input id="updateId" placeholder="ID"><br>
+<select id="newStatus">
+<option>Pending</option>
+<option>In Review</option>
+<option>Resolved</option>
+</select><br>
+<button onclick="updateStatus()">Update</button>
 </div>
 
 <script>
 
-/* NAV */
-function go(id){
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
-}
-
-/* LINKS */
-function openLink(url){
-  window.open(url,"_blank");
-}
-
-/* ALERT */
-const alerts=[
-"🚨 UPI Scam Active",
-"⚠ Fake Loan Apps",
-"🚨 OTP Fraud"
-];
-function loadAlerts(){
-  document.getElementById("alertsBox").innerHTML =
-    alerts.map(a=>`<div class="alert">${a}</div>`).join("");
-}
-loadAlerts();
-
-/* WEATHER */
-async function loadWeather(){
-  const res=await fetch("https://api.open-meteo.com/v1/forecast?latitude=26.9&longitude=75.8&current_weather=true");
-  const d=await res.json();
-  document.getElementById("weather").innerHTML="🌤 "+d.current_weather.temperature+"°C";
-}
-
-/* COMPLAINT */
+// SUBMIT
 async function submitComplaint(){
 
-  const id="MK"+Math.floor(Math.random()*100000);
+  const id = "MK" + Math.floor(Math.random()*100000);
 
-  const name=document.getElementById("name").value;
-  const phone=document.getElementById("phone").value;
-  const complaint=document.getElementById("complaintText").value;
+  const data = {
+    id,
+    name:document.getElementById("name").value,
+    phone:document.getElementById("phone").value,
+    complaint:document.getElementById("complaintText").value,
+    status:"Pending"
+  };
 
   await fetch("/api/data",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({id,name,phone,complaint,status:"Pending"})
+    body:JSON.stringify(data)
   });
 
   alert("Submitted ID: "+id);
 }
 
-/* TRACK */
+// TRACK
 async function track(){
-  const id=document.getElementById("trackId").value;
-  const res=await fetch("/api/data");
-  const data=await res.json();
 
-  const f=data.find(x=>x.id===id);
+  const id = document.getElementById("trackId").value.trim();
 
-  document.getElementById("statusBox").innerHTML=
-    f?"Status: "+f.status:"Not Found ❌";
+  const res = await fetch("/api/data");
+  const data = await res.json();
+
+  const found = data.find(x=>x.id===id);
+
+  document.getElementById("statusBox").innerHTML =
+    found ? "Status: "+found.status : "Not Found ❌";
 }
 
-/* GUIDE */
-function ask(){
-  let q=document.getElementById("query").value.toLowerCase();
-  let ans="No result found";
+// LOAD ALL
+async function loadComplaints(){
 
-  if(q.includes("job")) ans="Check jobs section";
-  if(q.includes("scheme")) ans="Check farmer schemes";
-  if(q.includes("loan")) ans="Use trusted banks only";
+  const res = await fetch("/api/data");
+  const data = await res.json();
 
-  document.getElementById("answerBox").innerHTML=ans;
+  let html="";
+
+  data.forEach(c=>{
+    html+=`
+    <div class="card">
+    ${c.id}<br>
+    ${c.name}<br>
+    ${c.phone}<br>
+    ${c.complaint}<br>
+    Status: ${c.status}
+    </div>`;
+  });
+
+  document.getElementById("allData").innerHTML=html;
+}
+
+// UPDATE
+async function updateStatus(){
+
+  const id=document.getElementById("updateId").value;
+  const status=document.getElementById("newStatus").value;
+
+  await fetch("/api/data",{
+    method:"PUT",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({id,status})
+  });
+
+  alert("Updated ✅");
 }
 
 </script>
