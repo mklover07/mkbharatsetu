@@ -1,62 +1,82 @@
-<script>
-if(localStorage.getItem("admin") !== "true"){
-  window.location.href = "/login.html";
-}
-</script><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <title>Admin Panel</title>
-
 <style>
-body {
-  font-family: Arial;
-  padding: 20px;
-  background: #f5f5f5;
-}
-
-h2 {
-  text-align: center;
-}
-
-.card {
-  background: white;
-  padding: 15px;
-  margin: 10px auto;
-  border-radius: 10px;
-  max-width: 500px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+body{font-family:sans-serif;background:#111;color:white;text-align:center;}
+table{width:90%;margin:auto;border-collapse:collapse;}
+td,th{border:1px solid #555;padding:10px;}
+button{padding:5px 10px;margin:3px;}
 </style>
 </head>
 
 <body>
 
-<h2>📊 All Complaints</h2>
+<h1>Admin Panel</h1>
 
 <button onclick="loadData()">Load Complaints</button>
 
-<div id="data"></div>
+<table id="table">
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Complaint</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</table>
 
 <script>
-async function loadData(){
 
+async function loadData(){
   const res = await fetch("/api/data");
   const data = await res.json();
 
-  let html = "";
+  let html = `
+  <tr>
+  <th>ID</th>
+  <th>Name</th>
+  <th>Complaint</th>
+  <th>Status</th>
+  <th>Action</th>
+  </tr>`;
 
-  data.forEach(item => {
+  data.forEach(d=>{
     html += `
-      <div class="card">
-        <b>Name:</b> ${item.name}<br>
-        <b>Phone:</b> ${item.phone}<br>
-        <b>Complaint:</b> ${item.complaint}
-      </div>
-    `;
+    <tr>
+      <td>${d.id}</td>
+      <td>${d.name}</td>
+      <td>${d.complaint}</td>
+      <td>${d.status}</td>
+      <td>
+        <button onclick="update('${d.id}','Approved')">Approve</button>
+        <button onclick="update('${d.id}','Resolved')">Resolve</button>
+        <button onclick="del('${d.id}')">Delete</button>
+      </td>
+    </tr>`;
   });
 
-  document.getElementById("data").innerHTML = html;
+  document.getElementById("table").innerHTML = html;
 }
+
+async function update(id,status){
+  await fetch("/api/data",{
+    method:"PUT",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({id,status})
+  });
+  loadData();
+}
+
+async function del(id){
+  await fetch("/api/data",{
+    method:"DELETE",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({id})
+  });
+  loadData();
+}
+
 </script>
 
 </body>
