@@ -5,108 +5,141 @@
 <title>MK Bharat Setu</title>
 
 <style>
-body{background:#0f2027;color:white;text-align:center;font-family:sans-serif;}
-.section{padding:20px;}
-input,textarea,select{padding:10px;margin:5px;border-radius:10px;width:250px;}
-button{padding:10px 20px;background:#00c6ff;border:none;border-radius:20px;}
+body{margin:0;font-family:sans-serif;background:#0f2027;color:white;}
+nav{display:flex;justify-content:center;gap:10px;background:#111;padding:10px;flex-wrap:wrap;}
+nav button{padding:8px 15px;border:none;border-radius:20px;background:#00c6ff;}
+.section{padding:30px;text-align:center;}
+input,textarea{padding:10px;margin:5px;border-radius:10px;width:250px;}
+button{padding:10px 20px;border:none;border-radius:20px;background:#00c6ff;}
 .card{border:1px solid white;margin:10px;padding:10px;border-radius:10px;}
 </style>
 </head>
 
 <body>
 
-<h2>MK Bharat Setu 🇮🇳</h2>
+<h2 style="text-align:center;">MK Bharat Setu 🇮🇳</h2>
 
-<!-- SUBMIT -->
-<div class="section">
-<h3>Submit Complaint</h3>
-<input id="name" placeholder="Name"><br>
-<input id="phone" placeholder="Phone"><br>
-<textarea id="complaint" placeholder="Complaint"></textarea><br>
-<button onclick="submit()">Submit</button>
+<!-- NAV -->
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('farmer')">Farmer</button>
+<button onclick="show('student')">Student</button>
+<button onclick="show('business')">Business</button>
+<button onclick="show('complaint')">Complaint</button>
+<button onclick="show('admin')">Admin</button>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="section">
+<h3>One Platform for Every Indian</h3>
+<p>Farmer • Student • Business • Public Support</p>
 </div>
 
-<!-- TRACK -->
-<div class="section">
+<!-- FARMER -->
+<div id="farmer" class="section" style="display:none;">
+<h3>Farmer Section</h3>
+<button onclick="openLink('https://pmkisan.gov.in')">Schemes</button>
+<button onclick="openLink('https://agmarknet.gov.in')">MSP</button>
+<button onclick="weather()">Weather</button>
+<div id="weatherBox"></div>
+</div>
+
+<!-- STUDENT -->
+<div id="student" class="section" style="display:none;">
+<h3>Student Section</h3>
+<button onclick="openLink('https://freejobalert.com')">Jobs</button>
+<button onclick="openLink('https://ncert.nic.in')">Notes</button>
+<button onclick="openLink('https://scholarships.gov.in')">Scholarship</button>
+</div>
+
+<!-- BUSINESS -->
+<div id="business" class="section" style="display:none;">
+<h3>Business Section</h3>
+<button onclick="openLink('https://startupindia.gov.in')">Startup</button>
+<button onclick="openLink('https://economictimes.indiatimes.com')">Market</button>
+</div>
+
+<!-- COMPLAINT -->
+<div id="complaint" class="section" style="display:none;">
+<h3>Submit Complaint</h3>
+
+<input id="name" placeholder="Name"><br>
+<input id="phone" placeholder="Phone"><br>
+<textarea id="text" placeholder="Complaint"></textarea><br>
+
+<button onclick="submit()">Submit</button>
+
 <h3>Track</h3>
 <input id="trackId" placeholder="ID"><br>
 <button onclick="track()">Track</button>
 <div id="status"></div>
 </div>
 
-<!-- ALL -->
-<div class="section">
+<!-- ADMIN -->
+<div id="admin" class="section" style="display:none;">
 <h3>All Complaints</h3>
 <button onclick="load()">Load</button>
 <div id="list"></div>
 </div>
 
-<!-- UPDATE -->
-<div class="section">
-<h3>Update Status</h3>
-<input id="uid" placeholder="ID"><br>
-<select id="ustatus">
-<option>Pending</option>
-<option>In Review</option>
-<option>Resolved</option>
-</select><br>
-<button onclick="update()">Update</button>
-</div>
-
 <script>
+
+// NAV
+function show(id){
+document.querySelectorAll('.section').forEach(s=>s.style.display='none');
+document.getElementById(id).style.display='block';
+}
+
+// LINKS
+function openLink(url){
+window.open(url);
+}
+
+// WEATHER
+async function weather(){
+const res=await fetch("https://api.open-meteo.com/v1/forecast?latitude=26.9&longitude=75.8&current_weather=true");
+const d=await res.json();
+weatherBox.innerHTML="Temp: "+d.current_weather.temperature+"°C";
+}
 
 // SUBMIT
 async function submit(){
-  const id="MK"+Date.now();
+const id="MK"+Date.now();
 
-  await fetch("/api/data",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      id,
-      name:name.value,
-      phone:phone.value,
-      complaint:complaint.value,
-      status:"Pending"
-    })
-  });
+await fetch("/api/data",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+id,
+name:name.value,
+phone:phone.value,
+complaint:text.value,
+status:"Pending"
+})
+});
 
-  alert("ID: "+id);
+alert("ID: "+id);
 }
 
 // TRACK
 async function track(){
-  const res=await fetch("/api/data");
-  const data=await res.json();
-
-  const f=data.find(x=>x.id===trackId.value);
-  status.innerHTML=f?"Status: "+f.status:"Not Found";
+const res=await fetch("/api/data");
+const data=await res.json();
+const f=data.find(x=>x.id===trackId.value);
+status.innerHTML=f?"Status: "+f.status:"Not Found";
 }
 
-// LOAD ALL
+// LOAD
 async function load(){
-  const res=await fetch("/api/data");
-  const data=await res.json();
+const res=await fetch("/api/data");
+const data=await res.json();
 
-  let html="";
-  data.forEach(x=>{
-    html+=`<div class="card">
-    ${x.id}<br>${x.name}<br>${x.phone}<br>${x.complaint}<br>${x.status}
-    </div>`;
-  });
+let html="";
+data.forEach(x=>{
+html+=`<div class="card">${x.id}<br>${x.name}<br>${x.status}</div>`;
+});
 
-  list.innerHTML=html;
-}
-
-// UPDATE
-async function update(){
-  await fetch("/api/data",{
-    method:"PUT",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({id:uid.value,status:ustatus.value})
-  });
-
-  alert("Updated");
+list.innerHTML=html;
 }
 
 </script>
