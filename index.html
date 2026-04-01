@@ -20,28 +20,31 @@ font-size:28px;
 font-weight:bold;
 }
 
-/* NAV */
+/* NAVBAR */
 nav{
 display:flex;
 justify-content:center;
 gap:10px;
 flex-wrap:wrap;
-padding:10px;
+padding:12px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
 nav button{
 background:rgba(255,255,255,0.1);
-border:1px solid rgba(255,255,255,0.2);
-color:white;
+border:none;
 padding:10px 18px;
 border-radius:30px;
+color:white;
 cursor:pointer;
 }
 
-/* SECTION */
+/* SECTIONS */
 .section{
 display:none;
-padding:20px;
+padding:30px;
 text-align:center;
 }
 
@@ -66,11 +69,19 @@ border:none;
 
 /* BUTTON */
 .btn{
-background:#00c6ff;
-padding:10px 20px;
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+padding:12px 22px;
 border:none;
-border-radius:20px;
+border-radius:25px;
+color:white;
+font-weight:bold;
 cursor:pointer;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.08);
+box-shadow:0 0 20px #00c6ff;
 }
 
 </style>
@@ -94,8 +105,39 @@ MK Bharat Setu 🇮🇳
 
 <!-- HOME -->
 <div id="home" class="section" style="display:block;">
-<h3>One Platform for Every Indian</h3>
-<p>Farmers • Students • Business • Public Support</p>
+
+<h1 style="font-size:36px;">India’s Digital Public Platform 🇮🇳</h1>
+
+<p style="opacity:0.8;">
+Empowering Farmers • Students • Businesses
+</p>
+
+<div style="margin-top:20px;">
+<button class="btn" onclick="show('complaint')">🚀 Raise Complaint</button>
+<button class="btn" onclick="show('farmer')">🌾 Explore Services</button>
+</div>
+
+<br><br>
+
+<div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;">
+
+<div class="card">
+<h2>10K+</h2>
+<p>Users</p>
+</div>
+
+<div class="card">
+<h2>5K+</h2>
+<p>Complaints Solved</p>
+</div>
+
+<div class="card">
+<h2>24/7</h2>
+<p>Support</p>
+</div>
+
+</div>
+
 </div>
 
 <!-- FARMER -->
@@ -150,16 +192,35 @@ MK Bharat Setu 🇮🇳
 
 <!-- ADMIN -->
 <div id="admin" class="section">
+
 <div class="card">
 <h3>All Complaints</h3>
 <button class="btn" onclick="load()">Load</button>
 <div id="list"></div>
 </div>
+
+<div class="card">
+<h3>Update Status</h3>
+<input id="uid" placeholder="ID">
+<input id="ustatus" placeholder="New Status">
+<button class="btn" onclick="update()">Update</button>
+</div>
+
+</div>
+
+<!-- SMART GUIDE -->
+<div class="section" id="guide">
+<div class="card">
+<h3>🤖 Smart Guide</h3>
+<input id="ai" placeholder="Ask anything...">
+<button class="btn" onclick="guide()">Search</button>
+<p id="ans"></p>
+</div>
 </div>
 
 <script>
 
-// NAVIGATION
+// NAV
 function show(id){
 document.querySelectorAll('.section').forEach(s=>s.style.display='none');
 document.getElementById(id).style.display='block';
@@ -204,7 +265,7 @@ const data=await res.json();
 status.innerHTML=data?"Status: "+data.status:"Not Found";
 }
 
-// LOAD ALL
+// LOAD
 async function load(){
 const res=await fetch("/api/data");
 const data=await res.json();
@@ -215,6 +276,30 @@ html+=`<div>${x.id} - ${x.status}</div>`;
 });
 
 list.innerHTML=html;
+}
+
+// UPDATE
+async function update(){
+await fetch("/api/data",{
+method:"PUT",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+id:uid.value,
+status:ustatus.value
+})
+});
+
+alert("Updated");
+}
+
+// SMART GUIDE
+function guide(){
+const q=ai.value.toLowerCase();
+
+if(q.includes("job")) ans.innerText="Go to Student Section";
+else if(q.includes("farmer")) ans.innerText="Go to Farmer Section";
+else if(q.includes("complaint")) ans.innerText="Use Complaint Section";
+else ans.innerText="Explore menu options";
 }
 
 </script>
