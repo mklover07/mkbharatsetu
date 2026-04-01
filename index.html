@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MK Bharat Setu</title>
 
 <style>
-body{margin:0;font-family:sans-serif;background:#0f2027;color:white;text-align:center;}
+body{background:#0f2027;color:white;text-align:center;font-family:sans-serif;}
 .section{padding:20px;}
-input,textarea,select{padding:10px;margin:5px;border-radius:10px;border:none;width:250px;}
+input,textarea,select{padding:10px;margin:5px;border-radius:10px;width:250px;}
 button{padding:10px 20px;background:#00c6ff;border:none;border-radius:20px;}
 .card{border:1px solid white;margin:10px;padding:10px;border-radius:10px;}
 </style>
@@ -23,110 +22,91 @@ button{padding:10px 20px;background:#00c6ff;border:none;border-radius:20px;}
 <h3>Submit Complaint</h3>
 <input id="name" placeholder="Name"><br>
 <input id="phone" placeholder="Phone"><br>
-<textarea id="complaintText" placeholder="Complaint"></textarea><br>
-<button onclick="submitComplaint()">Submit</button>
+<textarea id="complaint" placeholder="Complaint"></textarea><br>
+<button onclick="submit()">Submit</button>
 </div>
 
 <!-- TRACK -->
 <div class="section">
-<h3>Track Complaint</h3>
-<input id="trackId" placeholder="Enter ID"><br>
+<h3>Track</h3>
+<input id="trackId" placeholder="ID"><br>
 <button onclick="track()">Track</button>
-<div id="statusBox"></div>
+<div id="status"></div>
 </div>
 
-<!-- ADMIN VIEW -->
+<!-- ALL -->
 <div class="section">
 <h3>All Complaints</h3>
-<button onclick="loadComplaints()">Load</button>
-<div id="allData"></div>
+<button onclick="load()">Load</button>
+<div id="list"></div>
 </div>
 
 <!-- UPDATE -->
 <div class="section">
 <h3>Update Status</h3>
-<input id="updateId" placeholder="ID"><br>
-<select id="newStatus">
+<input id="uid" placeholder="ID"><br>
+<select id="ustatus">
 <option>Pending</option>
 <option>In Review</option>
 <option>Resolved</option>
 </select><br>
-<button onclick="updateStatus()">Update</button>
+<button onclick="update()">Update</button>
 </div>
 
 <script>
 
 // SUBMIT
-async function submitComplaint(){
-
-  const id = "MK" + Math.floor(Math.random()*100000);
-
-  const data = {
-    id,
-    name:document.getElementById("name").value,
-    phone:document.getElementById("phone").value,
-    complaint:document.getElementById("complaintText").value,
-    status:"Pending"
-  };
+async function submit(){
+  const id="MK"+Date.now();
 
   await fetch("/api/data",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(data)
+    body:JSON.stringify({
+      id,
+      name:name.value,
+      phone:phone.value,
+      complaint:complaint.value,
+      status:"Pending"
+    })
   });
 
-  alert("Submitted ID: "+id);
+  alert("ID: "+id);
 }
 
 // TRACK
 async function track(){
+  const res=await fetch("/api/data");
+  const data=await res.json();
 
-  const id = document.getElementById("trackId").value.trim();
-
-  const res = await fetch("/api/data");
-  const data = await res.json();
-
-  const found = data.find(x=>x.id===id);
-
-  document.getElementById("statusBox").innerHTML =
-    found ? "Status: "+found.status : "Not Found ❌";
+  const f=data.find(x=>x.id===trackId.value);
+  status.innerHTML=f?"Status: "+f.status:"Not Found";
 }
 
 // LOAD ALL
-async function loadComplaints(){
-
-  const res = await fetch("/api/data");
-  const data = await res.json();
+async function load(){
+  const res=await fetch("/api/data");
+  const data=await res.json();
 
   let html="";
-
-  data.forEach(c=>{
-    html+=`
-    <div class="card">
-    ${c.id}<br>
-    ${c.name}<br>
-    ${c.phone}<br>
-    ${c.complaint}<br>
-    Status: ${c.status}
+  data.forEach(x=>{
+    html+=`<div class="card">
+    ${x.id}<br>${x.name}<br>${x.phone}<br>${x.complaint}<br>${x.status}
     </div>`;
   });
 
-  document.getElementById("allData").innerHTML=html;
+  list.innerHTML=html;
 }
 
 // UPDATE
-async function updateStatus(){
-
-  const id=document.getElementById("updateId").value;
-  const status=document.getElementById("newStatus").value;
-
+async function update(){
   await fetch("/api/data",{
     method:"PUT",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({id,status})
+    body:JSON.stringify({id:uid.value,status:ustatus.value})
   });
 
-  alert("Updated ✅");
+  alert("Updated");
 }
 
 </script>
