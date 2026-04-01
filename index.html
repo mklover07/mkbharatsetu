@@ -5,21 +5,84 @@
 <title>MK Bharat Setu</title>
 
 <style>
-body{margin:0;font-family:sans-serif;background:#0f2027;color:white;}
-nav{display:flex;justify-content:center;gap:10px;background:#111;padding:10px;flex-wrap:wrap;}
-nav button{padding:8px 15px;border:none;border-radius:20px;background:#00c6ff;}
-.section{padding:30px;text-align:center;}
-input,textarea{padding:10px;margin:5px;border-radius:10px;width:250px;}
-button{padding:10px 20px;border:none;border-radius:20px;background:#00c6ff;}
-.card{border:1px solid white;margin:10px;padding:10px;border-radius:10px;}
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+}
+
+/* HEADER */
+.header{
+text-align:center;
+padding:30px;
+font-size:28px;
+font-weight:bold;
+}
+
+/* NAV */
+nav{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+padding:10px;
+}
+
+nav button{
+background:rgba(255,255,255,0.1);
+border:1px solid rgba(255,255,255,0.2);
+color:white;
+padding:10px 18px;
+border-radius:30px;
+cursor:pointer;
+}
+
+/* SECTION */
+.section{
+display:none;
+padding:20px;
+text-align:center;
+}
+
+/* CARD */
+.card{
+background:rgba(255,255,255,0.08);
+border-radius:20px;
+padding:20px;
+margin:15px auto;
+width:300px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* INPUT */
+input,textarea{
+width:90%;
+padding:12px;
+margin:8px;
+border-radius:10px;
+border:none;
+}
+
+/* BUTTON */
+.btn{
+background:#00c6ff;
+padding:10px 20px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
 
-<h2 style="text-align:center;">MK Bharat Setu 🇮🇳</h2>
+<div class="header">
+MK Bharat Setu 🇮🇳  
+<br><small>Powered by MK Global Nexus</small>
+</div>
 
-<!-- NAV -->
 <nav>
 <button onclick="show('home')">Home</button>
 <button onclick="show('farmer')">Farmer</button>
@@ -30,61 +93,73 @@ button{padding:10px 20px;border:none;border-radius:20px;background:#00c6ff;}
 </nav>
 
 <!-- HOME -->
-<div id="home" class="section">
+<div id="home" class="section" style="display:block;">
 <h3>One Platform for Every Indian</h3>
-<p>Farmer • Student • Business • Public Support</p>
+<p>Farmers • Students • Business • Public Support</p>
 </div>
 
 <!-- FARMER -->
-<div id="farmer" class="section" style="display:none;">
-<h3>Farmer Section</h3>
-<button onclick="openLink('https://pmkisan.gov.in')">Schemes</button>
-<button onclick="openLink('https://agmarknet.gov.in')">MSP</button>
-<button onclick="weather()">Weather</button>
-<div id="weatherBox"></div>
+<div id="farmer" class="section">
+<div class="card">
+<h3>Farmer</h3>
+<button class="btn" onclick="openLink('https://pmkisan.gov.in')">Schemes</button>
+<button class="btn" onclick="openLink('https://agmarknet.gov.in')">MSP</button>
+<button class="btn" onclick="weather()">Weather</button>
+<p id="weatherBox"></p>
+</div>
 </div>
 
 <!-- STUDENT -->
-<div id="student" class="section" style="display:none;">
-<h3>Student Section</h3>
-<button onclick="openLink('https://freejobalert.com')">Jobs</button>
-<button onclick="openLink('https://ncert.nic.in')">Notes</button>
-<button onclick="openLink('https://scholarships.gov.in')">Scholarship</button>
+<div id="student" class="section">
+<div class="card">
+<h3>Student</h3>
+<button class="btn" onclick="openLink('https://freejobalert.com')">Jobs</button>
+<button class="btn" onclick="openLink('https://ncert.nic.in')">Notes</button>
+<button class="btn" onclick="openLink('https://scholarships.gov.in')">Scholarship</button>
+</div>
 </div>
 
 <!-- BUSINESS -->
-<div id="business" class="section" style="display:none;">
-<h3>Business Section</h3>
-<button onclick="openLink('https://startupindia.gov.in')">Startup</button>
-<button onclick="openLink('https://economictimes.indiatimes.com')">Market</button>
+<div id="business" class="section">
+<div class="card">
+<h3>Business</h3>
+<button class="btn" onclick="openLink('https://startupindia.gov.in')">Startup</button>
+<button class="btn" onclick="openLink('https://economictimes.indiatimes.com')">Market</button>
+</div>
 </div>
 
 <!-- COMPLAINT -->
-<div id="complaint" class="section" style="display:none;">
+<div id="complaint" class="section">
+
+<div class="card">
 <h3>Submit Complaint</h3>
+<input id="name" placeholder="Name">
+<input id="phone" placeholder="Phone">
+<textarea id="text" placeholder="Complaint"></textarea>
+<button class="btn" onclick="submit()">Submit</button>
+</div>
 
-<input id="name" placeholder="Name"><br>
-<input id="phone" placeholder="Phone"><br>
-<textarea id="text" placeholder="Complaint"></textarea><br>
+<div class="card">
+<h3>Track Complaint</h3>
+<input id="trackId" placeholder="Enter ID">
+<button class="btn" onclick="track()">Track</button>
+<p id="status"></p>
+</div>
 
-<button onclick="submit()">Submit</button>
-
-<h3>Track</h3>
-<input id="trackId" placeholder="ID"><br>
-<button onclick="track()">Track</button>
-<div id="status"></div>
 </div>
 
 <!-- ADMIN -->
-<div id="admin" class="section" style="display:none;">
+<div id="admin" class="section">
+<div class="card">
 <h3>All Complaints</h3>
-<button onclick="load()">Load</button>
+<button class="btn" onclick="load()">Load</button>
 <div id="list"></div>
+</div>
 </div>
 
 <script>
 
-// NAV
+// NAVIGATION
 function show(id){
 document.querySelectorAll('.section').forEach(s=>s.style.display='none');
 document.getElementById(id).style.display='block';
@@ -118,25 +193,25 @@ status:"Pending"
 })
 });
 
-alert("ID: "+id);
+alert("Complaint ID: "+id);
 }
 
 // TRACK
 async function track(){
-const res=await fetch("/api/data");
+const res=await fetch("/api/data?id="+trackId.value);
 const data=await res.json();
-const f=data.find(x=>x.id===trackId.value);
-status.innerHTML=f?"Status: "+f.status:"Not Found";
+
+status.innerHTML=data?"Status: "+data.status:"Not Found";
 }
 
-// LOAD
+// LOAD ALL
 async function load(){
 const res=await fetch("/api/data");
 const data=await res.json();
 
 let html="";
 data.forEach(x=>{
-html+=`<div class="card">${x.id}<br>${x.name}<br>${x.status}</div>`;
+html+=`<div>${x.id} - ${x.status}</div>`;
 });
 
 list.innerHTML=html;
