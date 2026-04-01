@@ -1,26 +1,39 @@
-let complaints = [];
+import { MongoClient } from "mongodb";
 
-export default function handler(req, res) {
+let client;
 
-  // GET
-  if (req.method === "GET") {
-    return res.json(complaints);
+export default async function handler(req, res) {
+
+  try {
+
+    if (!client) {
+      client = new MongoClient(process.env.MONGO_URL);
+      await client.connect();
+    }
+
+    const db = client.db("mkbharat");
+    const col = db.collection("complaints");
+
+    // GET
+    if (req.method === "GET") {
+      const data = await col.find().toArray();
+      return res.json(data);
+    }
+
+    // POST
+    if (req.method === "POST") {
+      await col.insertOne(req.body);
+      return res.json({ msg: "saved" });
+    }
+
+    // PUT
+    if (req.method === "PUT") {
+      const { id, status } = req.body;
+      await col.updateOne({ id }, { $set: { status } });
+      return res.json({ msg: "updated" });
+    }
+
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
-
-  // POST
-  if (req.method === "POST") {
-    const data = req.body;
-    complaints.push(data);
-    return res.json({ msg: "Saved" });
-  }
-
-  // PUT
-  if (req.method === "PUT") {
-    const { id, status } = req.body;
-    const item = complaints.find(x => x.id === id);
-    if (item) item.status = status;
-    return res.json({ msg: "Updated" });
-  }
-
-  res.status(405).end();
 }
