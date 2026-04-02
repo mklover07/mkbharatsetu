@@ -1,19 +1,16 @@
-export default function handler(req, res) {
-  const { username, password } = req.body;
+import clientPromise from "../lib/db";
 
-  // Hardcoded credentials (later DB में डालेंगे)
-  const ADMIN_USER = "admin";
-  const ADMIN_PASS = "123456";
+export default async function handler(req, res) {
+const { u, p } = JSON.parse(req.body);
 
-  if (username === ADMIN_USER && password === ADMIN_PASS) {
-    return res.status(200).json({
-      success: true,
-      token: "mkbharat-token-123"
-    });
-  } else {
-    return res.status(401).json({
-      success: false,
-      message: "Invalid credentials"
-    });
-  }
+const client = await clientPromise;
+const db = client.db("mkdb");
+
+const user = await db.collection("users").findOne({ username: u, password: p });
+
+if (user) {
+res.json({ success: true });
+} else {
+res.json({ success: false });
+}
 }
