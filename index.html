@@ -1,69 +1,251 @@
-<!-- PROJECT STRUCTURE
-
-/index.html
-/login.html
-/admin.html
-/api/login.js
-/api/complaint.js
-/api/ai.js
---><!-- ================= INDEX.HTML ================= --><!DOCTYPE html><html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MK Bharat Setu</title>
-<script>
-function detectState(){
-fetch("https://ipapi.co/json/")
-.then(res=>res.json())
-.then(data=>{
-document.getElementById("state").innerText = data.region;
-});
-}async function askAI(){ let q=document.getElementById("q").value; let res=await fetch('/api/ai',{method:'POST',body:JSON.stringify({q})}); let data=await res.json(); document.getElementById("ans").innerText=data.answer; }
 
-window.onload=detectState; </script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
+
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+scroll-behavior:smooth;
+}
+
+/* NAV */
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:center;
+gap:15px;
+padding:15px;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+padding:8px 15px;
+border-radius:20px;
+}
+
+nav a:hover{
+background:#00c6ff;
+}
+
+/* HERO */
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.hero h1{
+font-size:45px;
+}
+
+.btn{
+margin-top:20px;
+padding:12px 25px;
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+border-radius:30px;
+text-decoration:none;
+color:white;
+display:inline-block;
+}
+
+/* SECTION */
+.section{
+padding:80px 20px;
+text-align:center;
+}
+
+/* CARDS */
+.cards{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+border-radius:15px;
+padding:20px;
+width:250px;
+backdrop-filter:blur(10px);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+/* FOOTER */
+footer{
+text-align:center;
+padding:20px;
+background:#000;
+margin-top:40px;
+}
+</style>
 </head>
+
 <body>
-<h2>MK Bharat Setu</h2>
-<p>Your State: <span id="state"></span></p><h3>AI Smart Guide</h3>
-<input id="q" placeholder="Ask anything">
-<button onclick="askAI()">Ask</button>
-<p id="ans"></p><a href="login.html">Login</a>
+
+<!-- NAV -->
+<nav>
+<a href="#home">Home</a>
+<a href="#farmer">Farmer</a>
+<a href="#student">Student</a>
+<a href="#business">Business</a>
+<a href="#aadhaar">Aadhaar</a>
+<a href="#health">Health</a>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+<h1>🚀 MK Bharat Setu</h1>
+<p>India’s All-in-One Digital Service Platform</p>
+
+<a href="#farmer" class="btn">Explore Services</a>
+</section>
+
+<!-- FARMER -->
+<section id="farmer" class="section">
+<h2>🌾 Farmer Services</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>PM Kisan</h3>
+<a href="https://pmkisan.gov.in/" target="_blank" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>Weather</h3>
+<a href="https://mausam.imd.gov.in/" target="_blank" class="btn">Check</a>
+</div>
+
+<div class="card">
+<h3>MSP</h3>
+<a href="https://agmarknet.gov.in/" target="_blank" class="btn">View</a>
+</div>
+
+<div class="card">
+<h3>Insurance</h3>
+<a href="https://pmfby.gov.in/" target="_blank" class="btn">Apply</a>
+</div>
+
+</div>
+</section>
+
+<!-- STUDENT -->
+<section id="student" class="section">
+<h2>🎓 Student Services</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Scholarship</h3>
+<a href="https://scholarships.gov.in/" target="_blank" class="btn">Apply</a>
+</div>
+
+<div class="card">
+<h3>Jobs</h3>
+<a href="https://www.naukri.com/" target="_blank" class="btn">Search</a>
+</div>
+
+<div class="card">
+<h3>Results</h3>
+<a href="https://results.gov.in/" target="_blank" class="btn">Check</a>
+</div>
+
+</div>
+</section>
+
+<!-- BUSINESS -->
+<section id="business" class="section">
+<h2>💼 Business Services</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>GST</h3>
+<a href="https://www.gst.gov.in/" target="_blank" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>Startup India</h3>
+<a href="https://www.startupindia.gov.in/" target="_blank" class="btn">Visit</a>
+</div>
+
+<div class="card">
+<h3>MSME</h3>
+<a href="https://udyamregistration.gov.in/" target="_blank" class="btn">Register</a>
+</div>
+
+</div>
+</section>
+
+<!-- AADHAAR -->
+<section id="aadhaar" class="section">
+<h2>🪪 Aadhaar Services</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Download Aadhaar</h3>
+<a href="https://myaadhaar.uidai.gov.in/" target="_blank" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>Check Status</h3>
+<a href="https://resident.uidai.gov.in/check-aadhaar" target="_blank" class="btn">Check</a>
+</div>
+
+</div>
+</section>
+
+<!-- HEALTH -->
+<section id="health" class="section">
+<h2>🏥 Health Services</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>AIIMS Delhi</h3>
+<a href="https://www.aiims.edu/" target="_blank" class="btn">Visit</a>
+</div>
+
+<div class="card">
+<h3>Appointment</h3>
+<a href="https://ors.gov.in/" target="_blank" class="btn">Book</a>
+</div>
+
+<div class="card">
+<h3>Health ID</h3>
+<a href="https://abha.abdm.gov.in/" target="_blank" class="btn">Create</a>
+</div>
+
+</div>
+</section>
+
+<footer>
+<p>© MK Bharat Setu | MK Global Nexus</p>
+<p style="font-size:12px;">Redirects to official government websites</p>
+</footer>
 
 </body>
-</html><!-- ================= LOGIN.HTML ================= --><!DOCTYPE html><html>
-<body>
-<h2>Login</h2>
-<input id="user" placeholder="Username">
-<input id="pass" placeholder="Password" type="password">
-<button onclick="login()">Login</button><script>
-async function login(){
-let res=await fetch('/api/login',{method:'POST',body:JSON.stringify({u:user.value,p:pass.value})});
-let d=await res.json();
-if(d.success) location.href='admin.html';
-else alert('Wrong');
-}
-</script></body>
-</html><!-- ================= ADMIN.HTML ================= --><!DOCTYPE html><html>
-<body>
-<h2>Admin Dashboard</h2>
-<div id="data"></div><script>
-fetch('/api/complaint')
-.then(r=>r.json())
-.then(d=>{
-let html="";
-d.forEach(c=>{
-html+=`<p>${c.name} - ${c.issue}</p>`;
-});
-document.getElementById("data").innerHTML=html;
-});
-</script></body>
-</html><!-- ================= API LOGIN ================= -->// /api/login.js export default function handler(req,res){ let {u,p}=JSON.parse(req.body); if(u==='admin' && p==='1234'){ res.json({success:true}); }else{ res.json({success:false}); } }
-
-<!-- ================= API COMPLAINT ================= -->// /api/complaint.js let db=[ {name:"Ravi",issue:"Payment issue"} ];
-
-export default function handler(req,res){ res.json(db); }
-
-<!-- ================= API AI ================= -->// /api/ai.js export default async function handler(req,res){ let {q}=JSON.parse(req.body);
-
-let response=await fetch("https://api.openai.com/v1/chat/completions",{ method:"POST", headers:{ "Authorization":"Bearer YOUR_OPENAI_KEY", "Content-Type":"application/json" }, body:JSON.stringify({ model:"gpt-4o-mini", messages:[{role:"user",content:q}] }) });
-
-let data=await response.json(); res.json({answer:data.choices[0].message.content}); }
+</html>
