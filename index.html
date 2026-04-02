@@ -13,7 +13,6 @@
 body{
 background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
-scroll-behavior:smooth;
 }
 
 /* NAVBAR */
@@ -24,8 +23,8 @@ gap:15px;
 padding:15px;
 position:sticky;
 top:0;
+background:rgba(0,0,0,0.5);
 backdrop-filter:blur(10px);
-background:rgba(0,0,0,0.4);
 z-index:1000;
 }
 
@@ -45,13 +44,14 @@ background:#00c6ff;
 
 /* SECTION */
 section{
+display:none;
 padding:80px 20px;
 text-align:center;
 }
 
 /* HERO */
 .hero h1{
-font-size:42px;
+font-size:40px;
 margin-bottom:10px;
 }
 
@@ -79,7 +79,15 @@ background:rgba(255,255,255,0.08);
 padding:20px;
 border-radius:15px;
 width:220px;
-backdrop-filter:blur(10px);
+}
+
+/* PROFILE */
+.profile img{
+width:120px;
+height:120px;
+border-radius:50%;
+border:3px solid #00c6ff;
+object-fit:cover;
 }
 
 /* FORM */
@@ -90,20 +98,10 @@ margin:10px;
 border:none;
 border-radius:10px;
 }
-
-/* PROFILE */
-.profile img{
-width:120px;
-height:120px;
-border-radius:50%;
-border:3px solid #00c6ff;
-}
-
-/* HIDE */
-.hidden{display:none;}
 </style>
 
 </head>
+
 <body>
 
 <!-- NAVBAR -->
@@ -117,6 +115,7 @@ border:3px solid #00c6ff;
 
 <!-- HOME -->
 <section id="home">
+
 <div class="hero">
 <h1>India’s Digital Public Platform 🇮🇳</h1>
 <p>Empowering Farmers • Students • Businesses</p>
@@ -131,8 +130,8 @@ border:3px solid #00c6ff;
 <div class="card"><h2>24/7</h2><p>Support</p></div>
 </div>
 
-<!-- BRAND -->
-<div style="margin-top:40px;">
+<br><br>
+
 <h2>MK Global Nexus</h2>
 <p>Digital Innovation • Cyber Security • Public Support</p>
 
@@ -141,43 +140,42 @@ border:3px solid #00c6ff;
 <h3>Manoj Meena</h3>
 <p>Cyber Security Expert • Journalist</p>
 </div>
-</div>
 
 </section>
 
 <!-- FARMER -->
-<section id="farmer" class="hidden">
+<section id="farmer">
 <h2>Farmer Services 🌾</h2>
-<p>MSP • Weather • Schemes</p>
+<p>MSP • Weather • Government Schemes</p>
 </section>
 
 <!-- STUDENT -->
-<section id="student" class="hidden">
+<section id="student">
 <h2>Student Services 🎓</h2>
-<p>Jobs • Notes • Scholarship</p>
+<p>Jobs • Notes • Scholarships</p>
 </section>
 
 <!-- BUSINESS -->
-<section id="business" class="hidden">
+<section id="business">
 <h2>Business Services 💼</h2>
 <p>Startup • Funding • Support</p>
 </section>
 
 <!-- COMPLAINT -->
-<section id="complaint" class="hidden">
+<section id="complaint">
 
 <h2>Submit Complaint</h2>
 
 <input id="name" placeholder="Name"><br>
 <input id="phone" placeholder="Phone"><br>
-<textarea id="msg" placeholder="Complaint"></textarea><br>
+<textarea id="msg" placeholder="Write complaint"></textarea><br>
 
 <button class="btn" onclick="submitComplaint()">Submit</button>
 
 <h2>Track Complaint</h2>
 
-<input id="trackId" placeholder="Enter ID"><br>
-<button class="btn" onclick="track()">Track</button>
+<input id="trackId" placeholder="Enter Complaint ID"><br>
+<button class="btn" onclick="trackComplaint()">Track</button>
 
 <p id="status"></p>
 
@@ -187,22 +185,26 @@ border:3px solid #00c6ff;
 
 // NAVIGATION
 function show(id){
-document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
-document.getElementById(id).classList.remove('hidden');
+document.querySelectorAll("section").forEach(sec=>sec.style.display="none");
+document.getElementById(id).style.display="block";
+window.scrollTo(0,0);
 }
+
+// DEFAULT HOME
+show("home");
 
 // SUBMIT
 function submitComplaint(){
 let id="MK"+Math.floor(Math.random()*100000);
 localStorage.setItem(id,"Pending");
-alert("Complaint ID: "+id);
+alert("Complaint Submitted! ID: "+id);
 }
 
 // TRACK
-function track(){
+function trackComplaint(){
 let id=document.getElementById("trackId").value;
 let status=localStorage.getItem(id);
-document.getElementById("status").innerText=status?status:"Not Found";
+document.getElementById("status").innerText=status?status:"Complaint Not Found";
 }
 
 </script>
