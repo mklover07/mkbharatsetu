@@ -3,230 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>MK Bharat Setu</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
+
 body{
-margin:0;
-font-family:sans-serif;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+background:#f5f5f5;
+}
+
+/* HEADER */
+header{
+background:#2c3e50;
 color:white;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+nav a{
+margin:10px;
+color:white;
+text-decoration:none;
+}
+
+/* HERO */
+.hero{
+background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+url('https://images.unsplash.com/photo-1521791136064-7986c2920216');
+background-size:cover;
+color:white;
+padding:80px 20px;
 text-align:center;
 }
 
-/* NAV */
-nav{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
-padding:10px;
-background:#111;
+.hero h1{
+font-size:40px;
 }
 
-nav button{
-padding:10px 15px;
-border:none;
-border-radius:20px;
+.btn{
+display:inline-block;
+margin:10px;
+padding:12px 20px;
 background:#00c6ff;
 color:white;
-cursor:pointer;
+border-radius:20px;
+text-decoration:none;
 }
 
 /* SECTION */
 .section{
-display:none;
-padding:20px;
+padding:50px 20px;
+text-align:center;
 }
 
-/* CARD */
 .cards{
 display:flex;
 flex-wrap:wrap;
 justify-content:center;
-gap:15px;
+gap:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.08);
-padding:15px;
+background:white;
+padding:20px;
 border-radius:10px;
-width:200px;
+width:250px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* BUTTON */
-.btn{
-display:block;
-margin-top:10px;
-padding:8px;
-background:#00c6ff;
+.card h3{
+margin-bottom:10px;
+}
+
+/* FOOTER */
+footer{
+background:#2c3e50;
 color:white;
-text-decoration:none;
-border-radius:10px;
+padding:20px;
+text-align:center;
 }
 </style>
 </head>
 
 <body>
 
+<header>
 <h2>MK Bharat Setu 🇮🇳</h2>
-
-<!-- NAV -->
 <nav>
-<button onclick="show('home')">Home</button>
-<button onclick="show('farmer')">Farmer</button>
-<button onclick="show('student')">Student</button>
-<button onclick="show('business')">Business</button>
-<button onclick="show('aadhaar')">Aadhaar</button>
-<button onclick="show('health')">Health</button>
-<button onclick="show('state')">State</button>
+<a href="#farmer">Farmer</a>
+<a href="#student">Student</a>
+<a href="#business">Business</a>
+<a href="#aadhaar">Aadhaar</a>
+<a href="#health">Health</a>
 </nav>
+</header>
 
-<!-- HOME -->
-<div id="home" class="section" style="display:block;">
-<h3>All-in-One India Service Platform</h3>
-<p>Farmer • Student • Business • Health • Aadhaar</p>
-</div>
+<!-- HERO -->
+<section class="hero">
+<h1>India’s Digital Public Platform</h1>
+<p>All Services in One Place</p>
+
+<a href="#farmer" class="btn">Explore Services</a>
+</section>
 
 <!-- FARMER -->
-<div id="farmer" class="section">
+<section id="farmer" class="section">
 <h2>Farmer Services 🌾</h2>
 
 <div class="cards">
 
-<div class="card"><h3>PM Kisan</h3>
-<a href="https://pmkisan.gov.in/" target="_blank" class="btn">Open</a></div>
+<div class="card">
+<h3>PM Kisan</h3>
+<a href="https://pmkisan.gov.in/" target="_blank" class="btn">Open</a>
+</div>
 
-<div class="card"><h3>MSP</h3>
-<a href="https://agmarknet.gov.in/" target="_blank" class="btn">Check</a></div>
+<div class="card">
+<h3>Weather</h3>
+<a href="https://mausam.imd.gov.in/" target="_blank" class="btn">Check</a>
+</div>
 
-<div class="card"><h3>Weather</h3>
-<a href="https://mausam.imd.gov.in/" target="_blank" class="btn">View</a></div>
+<div class="card">
+<h3>MSP</h3>
+<a href="https://agmarknet.gov.in/" target="_blank" class="btn">View</a>
+</div>
 
-<div class="card"><h3>Insurance</h3>
-<a href="https://pmfby.gov.in/" target="_blank" class="btn">Apply</a></div>
-
-<div class="card"><h3>Mandis</h3>
-<a href="https://enam.gov.in/" target="_blank" class="btn">Visit</a></div>
+<div class="card">
+<h3>Insurance</h3>
+<a href="https://pmfby.gov.in/" target="_blank" class="btn">Apply</a>
+</div>
 
 </div>
-</div>
+</section>
 
 <!-- STUDENT -->
-<div id="student" class="section">
+<section id="student" class="section">
 <h2>Student Services 🎓</h2>
 
 <div class="cards">
 
-<div class="card"><h3>Scholarship</h3>
-<a href="https://scholarships.gov.in/" target="_blank" class="btn">Apply</a></div>
+<div class="card">
+<h3>Scholarship</h3>
+<a href="https://scholarships.gov.in/" target="_blank" class="btn">Apply</a>
+</div>
 
-<div class="card"><h3>Jobs</h3>
-<a href="https://www.naukri.com/" target="_blank" class="btn">Search</a></div>
+<div class="card">
+<h3>Jobs</h3>
+<a href="https://www.naukri.com/" target="_blank" class="btn">Search</a>
+</div>
 
-<div class="card"><h3>Results</h3>
-<a href="https://results.gov.in/" target="_blank" class="btn">Check</a></div>
-
-<div class="card"><h3>SSC</h3>
-<a href="https://ssc.nic.in/" target="_blank" class="btn">Visit</a></div>
+<div class="card">
+<h3>Results</h3>
+<a href="https://results.gov.in/" target="_blank" class="btn">Check</a>
+</div>
 
 </div>
-</div>
+</section>
 
 <!-- BUSINESS -->
-<div id="business" class="section">
+<section id="business" class="section">
 <h2>Business Services 💼</h2>
 
 <div class="cards">
 
-<div class="card"><h3>GST</h3>
-<a href="https://www.gst.gov.in/" target="_blank" class="btn">Open</a></div>
+<div class="card">
+<h3>GST</h3>
+<a href="https://www.gst.gov.in/" target="_blank" class="btn">Open</a>
+</div>
 
-<div class="card"><h3>Startup India</h3>
-<a href="https://www.startupindia.gov.in/" target="_blank" class="btn">Visit</a></div>
+<div class="card">
+<h3>Startup</h3>
+<a href="https://www.startupindia.gov.in/" target="_blank" class="btn">Visit</a>
+</div>
 
-<div class="card"><h3>MSME</h3>
-<a href="https://udyamregistration.gov.in/" target="_blank" class="btn">Register</a></div>
-
-<div class="card"><h3>Loan</h3>
-<a href="https://www.mudra.org.in/" target="_blank" class="btn">Apply</a></div>
+<div class="card">
+<h3>MSME</h3>
+<a href="https://udyamregistration.gov.in/" target="_blank" class="btn">Register</a>
+</div>
 
 </div>
-</div>
+</section>
 
 <!-- AADHAAR -->
-<div id="aadhaar" class="section">
+<section id="aadhaar" class="section">
 <h2>Aadhaar Services 🪪</h2>
 
 <div class="cards">
 
-<div class="card"><h3>Download</h3>
-<a href="https://myaadhaar.uidai.gov.in/" target="_blank" class="btn">Open</a></div>
+<div class="card">
+<h3>Download</h3>
+<a href="https://myaadhaar.uidai.gov.in/" target="_blank" class="btn">Open</a>
+</div>
 
-<div class="card"><h3>Status</h3>
-<a href="https://resident.uidai.gov.in/check-aadhaar" target="_blank" class="btn">Check</a></div>
-
-<div class="card"><h3>Update</h3>
-<a href="https://myaadhaar.uidai.gov.in/" target="_blank" class="btn">Update</a></div>
+<div class="card">
+<h3>Status</h3>
+<a href="https://resident.uidai.gov.in/check-aadhaar" target="_blank" class="btn">Check</a>
+</div>
 
 </div>
-</div>
+</section>
 
 <!-- HEALTH -->
-<div id="health" class="section">
+<section id="health" class="section">
 <h2>Health Services 🏥</h2>
 
 <div class="cards">
 
-<div class="card"><h3>AIIMS Delhi</h3>
-<a href="https://www.aiims.edu/" target="_blank" class="btn">Visit</a></div>
-
-<div class="card"><h3>AIIMS Jodhpur</h3>
-<a href="https://www.aiimsjodhpur.edu.in/" target="_blank" class="btn">Visit</a></div>
-
-<div class="card"><h3>Appointment</h3>
-<a href="https://ors.gov.in/" target="_blank" class="btn">Book</a></div>
-
-<div class="card"><h3>Health ID</h3>
-<a href="https://abha.abdm.gov.in/" target="_blank" class="btn">Create</a></div>
-
-</div>
+<div class="card">
+<h3>AIIMS Delhi</h3>
+<a href="https://www.aiims.edu/" target="_blank" class="btn">Visit</a>
 </div>
 
-<!-- STATE SYSTEM -->
-<div id="state" class="section">
-<h2>Select State 🌍</h2>
-
-<select onchange="loadState(this.value)">
-<option>Select</option>
-<option value="rajasthan">Rajasthan</option>
-<option value="up">UP</option>
-</select>
-
-<div id="stateBox"></div>
+<div class="card">
+<h3>Appointment</h3>
+<a href="https://ors.gov.in/" target="_blank" class="btn">Book</a>
 </div>
 
-<script>
+<div class="card">
+<h3>Health ID</h3>
+<a href="https://abha.abdm.gov.in/" target="_blank" class="btn">Create</a>
+</div>
 
-// NAVIGATION
-function show(id){
-document.querySelectorAll(".section").forEach(s=>s.style.display="none");
-document.getElementById(id).style.display="block";
-}
+</div>
+</section>
 
-// STATE
-function loadState(s){
-let box=document.getElementById("stateBox");
-
-if(s==="rajasthan"){
-box.innerHTML="<h3>Rajasthan</h3><a href='https://sso.rajasthan.gov.in/' target='_blank'>SSO Portal</a>";
-}
-else if(s==="up"){
-box.innerHTML="<h3>UP</h3><a href='https://up.gov.in/' target='_blank'>UP Portal</a>";
-}
-}
-
-</script>
+<footer>
+<p>© MK Bharat Setu | MK Global Nexus</p>
+<p style="font-size:12px;">Not an official govt website. Links redirect to official portals.</p>
+</footer>
 
 </body>
 </html>
