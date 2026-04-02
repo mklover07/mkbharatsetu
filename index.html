@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>MK Bharat Setu</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
@@ -12,55 +11,79 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
 
 body{
-background:#f5f5f5;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+overflow-x:hidden;
 }
 
-/* HEADER */
-header{
-background:#2c3e50;
-color:white;
-padding:15px;
+/* NAV */
+nav{
+position:fixed;
+top:0;
+width:100%;
 display:flex;
-justify-content:space-between;
-align-items:center;
+justify-content:center;
+gap:15px;
+padding:15px;
+background:rgba(0,0,0,0.3);
+backdrop-filter:blur(10px);
+z-index:1000;
 }
 
 nav a{
-margin:10px;
 color:white;
 text-decoration:none;
+padding:8px 15px;
+border-radius:20px;
+transition:0.3s;
+}
+
+nav a:hover{
+background:#00c6ff;
 }
 
 /* HERO */
 .hero{
-background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-url('https://images.unsplash.com/photo-1521791136064-7986c2920216');
-background-size:cover;
-color:white;
-padding:80px 20px;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 text-align:center;
 }
 
 .hero h1{
-font-size:40px;
+font-size:45px;
+animation:fade 2s ease;
 }
 
+.hero p{
+margin-top:10px;
+opacity:0.8;
+}
+
+/* BUTTON */
 .btn{
-display:inline-block;
-margin:10px;
-padding:12px 20px;
-background:#00c6ff;
-color:white;
-border-radius:20px;
+margin-top:20px;
+padding:12px 25px;
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+border-radius:30px;
 text-decoration:none;
+color:white;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.05);
 }
 
 /* SECTION */
 .section{
-padding:50px 20px;
+padding:80px 20px;
 text-align:center;
 }
 
+/* GLASS CARD */
 .cards{
 display:flex;
 flex-wrap:wrap;
@@ -69,11 +92,16 @@ gap:20px;
 }
 
 .card{
-background:white;
+background:rgba(255,255,255,0.1);
+border-radius:15px;
 padding:20px;
-border-radius:10px;
-width:250px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+width:260px;
+backdrop-filter:blur(10px);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
 }
 
 .card h3{
@@ -82,38 +110,42 @@ margin-bottom:10px;
 
 /* FOOTER */
 footer{
-background:#2c3e50;
-color:white;
-padding:20px;
 text-align:center;
+padding:20px;
+background:#000;
+}
+
+/* ANIMATION */
+@keyframes fade{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h2>MK Bharat Setu 🇮🇳</h2>
+<!-- NAV -->
 <nav>
+<a href="#home">Home</a>
 <a href="#farmer">Farmer</a>
 <a href="#student">Student</a>
 <a href="#business">Business</a>
 <a href="#aadhaar">Aadhaar</a>
 <a href="#health">Health</a>
 </nav>
-</header>
 
 <!-- HERO -->
-<section class="hero">
-<h1>India’s Digital Public Platform</h1>
-<p>All Services in One Place</p>
+<section id="home" class="hero">
+<h1>🚀 MK Bharat Setu</h1>
+<p>India’s Smart Digital Platform</p>
 
 <a href="#farmer" class="btn">Explore Services</a>
 </section>
 
 <!-- FARMER -->
 <section id="farmer" class="section">
-<h2>Farmer Services 🌾</h2>
+<h2>🌾 Farmer Services</h2>
 
 <div class="cards">
 
@@ -142,7 +174,7 @@ text-align:center;
 
 <!-- STUDENT -->
 <section id="student" class="section">
-<h2>Student Services 🎓</h2>
+<h2>🎓 Student Services</h2>
 
 <div class="cards">
 
@@ -166,7 +198,7 @@ text-align:center;
 
 <!-- BUSINESS -->
 <section id="business" class="section">
-<h2>Business Services 💼</h2>
+<h2>💼 Business Services</h2>
 
 <div class="cards">
 
@@ -190,7 +222,7 @@ text-align:center;
 
 <!-- AADHAAR -->
 <section id="aadhaar" class="section">
-<h2>Aadhaar Services 🪪</h2>
+<h2>🪪 Aadhaar Services</h2>
 
 <div class="cards">
 
@@ -209,12 +241,12 @@ text-align:center;
 
 <!-- HEALTH -->
 <section id="health" class="section">
-<h2>Health Services 🏥</h2>
+<h2>🏥 Health Services</h2>
 
 <div class="cards">
 
 <div class="card">
-<h3>AIIMS Delhi</h3>
+<h3>AIIMS</h3>
 <a href="https://www.aiims.edu/" target="_blank" class="btn">Visit</a>
 </div>
 
@@ -233,7 +265,6 @@ text-align:center;
 
 <footer>
 <p>© MK Bharat Setu | MK Global Nexus</p>
-<p style="font-size:12px;">Not an official govt website. Links redirect to official portals.</p>
 </footer>
 
 </body>
